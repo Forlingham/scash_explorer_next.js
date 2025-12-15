@@ -186,3 +186,20 @@ export function inactiveAddressesListApi(period: string, type: string, page: num
     }
   })
 }
+
+interface ExplorerApiInfo {
+  name: string
+  version: string
+  description: string
+  contentType: string
+  rpc_auth: Rpcauth
+  rpc_support_methods: string[]
+}
+
+interface Rpcauth {
+  username: string
+  password: string
+}
+export function explorerApiInfoApi() {
+  return serverHttpClient.get<ExplorerApiInfo>('', {})
+}

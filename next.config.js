@@ -2,11 +2,11 @@
 const nextConfig = {
   async rewrites() {
     if (process.env.NODE_ENV !== 'production') {
+      const serverUrl = process.env.SERVER_URL || 'http://127.0.0.1:5100/api'
       return [
         {
           source: '/api/:path*',
-          destination: 'https://explorer.scash.network/api/:path*',
-          // destination: 'http://127.0.0.1:5100/api/:path*',
+          destination: `${serverUrl}/:path*`,
         },
       ];
     }

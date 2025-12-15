@@ -13,7 +13,8 @@ export async function Header() {
     { href: '/blocks/20/1', label: t('nav.blocks') },
     { href: '/transactions/20/1', label: t('nav.transactions') },
     // { href: '/mempool', label: t('nav.mempool') },
-    { href: `/whale-watcher/${today}`, label: t('nav.richList') }
+    { href: `/whale-watcher/${today}`, label: t('nav.richList') },
+    { href: `/info`, label: "API" }
     // { href: '/charts', label: t('nav.charts') }
   ]
 
