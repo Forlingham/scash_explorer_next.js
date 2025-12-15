@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/header'
@@ -59,9 +59,14 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png'
   },
-  themeColor: '#111827',
   manifest: '/site.webmanifest'
 }
+
+export const viewport: Viewport = {
+  themeColor: '#111827'
+}
+
+export const dynamic = 'force-dynamic'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
