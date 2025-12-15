@@ -73,7 +73,7 @@ export default async function BlocksPage({ params }: BlocksPageProps & { params:
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
+          <Table className="hidden md:table">
             <TableHeader>
               <TableRow>
                 <TableHead>{t('blocks.height')}</TableHead>
@@ -125,6 +125,44 @@ export default async function BlocksPage({ params }: BlocksPageProps & { params:
               ))}
             </TableBody>
           </Table>
+
+          <div className="md:hidden space-y-3">
+            {blocks.map((block) => (
+              <div key={block.height} className="rounded-lg border p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <Link href={`/block/${block.height}/20/1`} className="font-mono text-sm text-blue-600 hover:underline">
+                    #{block.height.toLocaleString()}
+                  </Link>
+                  <Badge variant="secondary">{(block.size / 1024).toFixed(1)} KB</Badge>
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">{formatTime(block.timestamp, t)}</div>
+                <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
+                  <div className="text-muted-foreground">{t('blocks.hash')}</div>
+                  <div className="text-right font-mono break-all col-span-2">
+                    <Link href={`/block/${block.hash}/20/1`} className="text-blue-600 hover:underline" title={block.hash}>
+                      {formatHash(block.hash)}
+                    </Link>
+                  </div>
+                  <div className="text-muted-foreground">{t('blocks.transactions')}</div>
+                  <div className="text-right col-span-2">
+                    <Badge variant="secondary">{block.txCount}</Badge>
+                  </div>
+                  <div className="text-muted-foreground">{t('blocks.gasUsed')}</div>
+                  <div className="text-right col-span-2">{block.medianFee} sat/vB</div>
+                  <div className="text-muted-foreground">{t('blocks.miner')}</div>
+                  <div className="text-right font-mono break-all col-span-2">
+                    <Link href={`/address/${block.minerAddress}`} className="text-blue-600 hover:underline" title={block.minerAddress || ''}>
+                      {formatAddress(block.minerAddress || '')}
+                    </Link>
+                  </div>
+                  <div className="text-muted-foreground">{t('reward')}</div>
+                  <div className="text-right col-span-2">
+                    {satoshisToBtc(block.reward).toFixed(8)} {BASE_SYMBOL}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
           {/* 分页导航 */}
           <Pagination

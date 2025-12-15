@@ -130,7 +130,7 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
           </div>
         </CardHeader>
         <CardContent>
-          <div className="rounded-md border">
+          <div className="rounded-md border hidden md:block">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -184,6 +184,51 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
                 ))}
               </TableBody>
             </Table>
+          </div>
+          <div className="md:hidden space-y-3">
+            {whaleData.map((whale) => (
+              <div key={whale.address} className="rounded-lg border p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <Link href={`/address/${whale.address}`} className="font-mono text-sm text-primary hover:underline break-all">
+                    {whale.address}
+                  </Link>
+                  <Badge variant="secondary">#{whale.currentRank}</Badge>
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                  <div className="text-muted-foreground">{t('whale.balance')}</div>
+                  <div className="text-right font-semibold">
+                    {whale.balance.toLocaleString()} {BASE_SYMBOL}
+                  </div>
+                  <div className="text-muted-foreground">{t('whale.balanceChange')}</div>
+                  <div className="text-right">
+                    <span
+                      className={
+                        whale.balanceChange > 0
+                          ? 'text-success font-semibold'
+                          : whale.balanceChange < 0
+                          ? 'text-destructive font-semibold'
+                          : 'text-muted-foreground'
+                      }
+                    >
+                      {whale.balanceChange > 0 ? '+' : ''}
+                      {whale.balanceChange.toLocaleString()} {BASE_SYMBOL}
+                    </span>
+                  </div>
+                  <div className="text-muted-foreground">{t('whale.rankChange')}</div>
+                  <div className="text-right">
+                    {whale.isNew ? (
+                      <Badge variant="default" className="bg-success">
+                        {t('whale.new')}
+                      </Badge>
+                    ) : whale.rankChange == 0 ? (
+                      '-'
+                    ) : (
+                      <PriceChange value={whale.rankChange} unit=" " />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

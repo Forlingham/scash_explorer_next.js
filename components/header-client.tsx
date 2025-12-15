@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useTheme } from '@/components/theme-provider'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 
 interface HeaderClientProps {
   navItems: Array<{ href: string; label: string }>
@@ -96,51 +97,53 @@ export function HeaderClient({ navItems, searchPlaceholder, currentLocale, searc
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2">
+      <div className="items-center gap-2 ">
         {/* Language Selector */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Globe className="h-5 w-5" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => handleLanguageChange('en')} className={currentLocale === 'en' ? 'bg-accent' : ''}>
-              English
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleLanguageChange('zh')} className={currentLocale === 'zh' ? 'bg-accent' : ''}>
-              中文
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleLanguageChange('ru')} className={currentLocale === 'ru' ? 'bg-accent' : ''}>
-              Русский
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="hidden md:block">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Globe className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => handleLanguageChange('en')} className={currentLocale === 'en' ? 'bg-accent' : ''}>
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleLanguageChange('zh')} className={currentLocale === 'zh' ? 'bg-accent' : ''}>
+                中文
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleLanguageChange('ru')} className={currentLocale === 'ru' ? 'bg-accent' : ''}>
+                Русский
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-        {/* Theme Selector */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              {theme === 'light' && <Sun className="h-5 w-5" />}
-              {theme === 'dark' && <Moon className="h-5 w-5" />}
-              {theme === 'system' && <Monitor className="h-5 w-5" />}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent' : ''}>
-              <Sun className="mr-2 h-4 w-4" />
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent' : ''}>
-              <Moon className="mr-2 h-4 w-4" />
-              Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent' : ''}>
-              <Monitor className="mr-2 h-4 w-4" />
-              System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          {/* Theme Selector */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                {theme === 'light' && <Sun className="h-5 w-5" />}
+                {theme === 'dark' && <Moon className="h-5 w-5" />}
+                {theme === 'system' && <Monitor className="h-5 w-5" />}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent' : ''}>
+                <Sun className="mr-2 h-4 w-4" />
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent' : ''}>
+                <Moon className="mr-2 h-4 w-4" />
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent' : ''}>
+                <Monitor className="mr-2 h-4 w-4" />
+                System
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
 
         <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -148,13 +151,15 @@ export function HeaderClient({ navItems, searchPlaceholder, currentLocale, searc
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
-            {/* Mobile Navigation */}
-            <div className="mb-4">
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="left" className="md:hidden">
+          <SheetHeader className="p-0">
+            <SheetTitle className="text-lg px-4 pt-4">菜单</SheetTitle>
+          </SheetHeader>
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-4">
               <form
-                className="relative w-full flex items-center gap-2"
+                className="relative w-full flex items-center gap-2 mt-2"
                 onSubmit={(e) => {
                   e.preventDefault()
                   navigateByQuery(query)
@@ -171,32 +176,88 @@ export function HeaderClient({ navItems, searchPlaceholder, currentLocale, searc
                   aria-label="Search by block height, txid, or address"
                 />
                 <Button type="submit" className="shrink-0">
-                  搜索
+                  {searchText}
                 </Button>
               </form>
             </div>
-
-            {/* Mobile Navigation */}
-            <nav className="flex flex-col gap-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    'px-4 py-3 rounded-lg text-sm font-medium transition-colors',
-                    isActive(item.href)
-                      ? 'bg-primary/10 text-primary font-semibold'
-                      : 'text-foreground/80 hover:bg-muted hover:text-foreground'
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <div className="mt-4">
+              <nav className="flex flex-col">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      'px-4 py-3 text-sm font-medium transition-colors border-b',
+                      isActive(item.href)
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
-        </div>
-      )}
+          <div className="px-4 py-4 mt-auto">
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground">语言</div>
+              <div className="flex gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleLanguageChange('zh')}
+                  className={currentLocale === 'zh' ? 'bg-primary/20' : ''}
+                >
+                  中文
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleLanguageChange('en')}
+                  className={currentLocale === 'en' ? 'bg-primary/20' : ''}
+                >
+                  EN
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleLanguageChange('ru')}
+                  className={currentLocale === 'ru' ? 'bg-primary/20' : ''}
+                >
+                  RU
+                </Button>
+              </div>
+            </div>
+            <br />
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground">主题</div>
+              <div className="flex gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setTheme('light')}
+                  className={theme === 'light' ? 'bg-primary/20' : ''}
+                >
+                  <Sun className="h-4 w-4" />
+                </Button>
+                <Button variant="secondary" size="sm" onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-primary/20' : ''}>
+                  <Moon className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setTheme('system')}
+                  className={theme === 'system' ? 'bg-primary/20' : ''}
+                >
+                  <Monitor className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   )
 }

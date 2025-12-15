@@ -1,6 +1,7 @@
 'use client'
 
 import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface PieChartComponentProps {
   data: Array<{
@@ -29,6 +30,11 @@ const GRADIENT_COLORS = [
 ]
 
 export function PieChartComponent({ data, dataKey, valueLabel, isPercentage = false, title }: PieChartComponentProps) {
+  const isMobile = useIsMobile()
+  const containerHeight = isMobile ? 280 : 400
+  const outerRadius = isMobile ? 100 : 130
+  const innerRadius = isMobile ? 40 : 50
+
   const formatValue = (value: number) => {
     if (isPercentage) {
       return `${value.toFixed(2)}%`
@@ -82,42 +88,42 @@ export function PieChartComponent({ data, dataKey, valueLabel, isPercentage = fa
 
   return (
     <div className="w-full">
-      {title && <h3 className="text-lg font-semibold text-center mb-4 text-gray-900 dark:text-gray-100">{title}</h3>}
-      <ResponsiveContainer width="100%" height={400}>
+      {title && <h3 className="text-base md:text-lg font-semibold text-center mb-3 md:mb-4 text-gray-900 dark:text-gray-100">{title}</h3>}
+      <ResponsiveContainer width="100%" height={containerHeight}>
         <RePieChart>
           {createGradientDefs()}
           <Pie
             data={enhancedData}
             cx="50%"
             cy="50%"
-            labelLine={true}
-            outerRadius={130}
-            innerRadius={50}
+            labelLine={!isMobile}
+            outerRadius={outerRadius}
+            innerRadius={innerRadius}
             dataKey={dataKey}
-            label={({ name, percent, cx, cy, midAngle, innerRadius, outerRadius }: any) => {
-              // 显示所有扇形的百分比，但对于很小的扇形使用更小的字体
-              const RADIAN = Math.PI / 180;
-              const radius = outerRadius + 30; // 将标签放在饼图外面
-              const x = cx + radius * Math.cos(-midAngle * RADIAN);
-              const y = cy + radius * Math.sin(-midAngle * RADIAN);
-              
-              // 对于小于2%的扇形使用更小的字体
-              const fontSize = percent < 0.02 ? 'text-xs' : 'text-sm';
-              
-              return (
-                <text 
-                  x={x} 
-                  y={y} 
-                  fill="#374151" 
-                  textAnchor={x > cx ? 'start' : 'end'} 
-                  dominantBaseline="central"
-                  className={`font-bold ${fontSize} dark:fill-gray-300`}
-                  style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
-                >
-                  {`${(percent * 100).toFixed(1)}%`}
-                </text>
-              );
-            }}
+            label={
+              isMobile
+                ? false
+                : ({ percent, cx, cy, midAngle, outerRadius }: any) => {
+                    const RADIAN = Math.PI / 180
+                    const radius = outerRadius + 30
+                    const x = cx + radius * Math.cos(-midAngle * RADIAN)
+                    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+                    const fontSize = percent < 0.02 ? 'text-xs' : 'text-sm'
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        fill="#374151"
+                        textAnchor={x > cx ? 'start' : 'end'}
+                        dominantBaseline="central"
+                        className={`font-bold ${fontSize} dark:fill-gray-300`}
+                        style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
+                      >
+                        {`${(percent * 100).toFixed(1)}%`}
+                      </text>
+                    )
+                  }
+            }
             stroke="rgba(255,255,255,0.8)"
             strokeWidth={3}
           >
@@ -135,26 +141,27 @@ export function PieChartComponent({ data, dataKey, valueLabel, isPercentage = fa
           <Tooltip content={<CustomTooltip />} />
           <Legend
             verticalAlign="bottom"
-            height={80}
+            height={isMobile ? 60 : 80}
             content={(props) => {
-              // 使用原始数据顺序而不是 Recharts 自动排序的 payload
               return (
-                <div className="flex flex-wrap justify-center gap-3 mt-4 max-w-full px-4">
+                <div className={`mt-3 md:mt-4 max-w-full ${isMobile ? 'overflow-x-auto -mx-4 px-4' : 'px-4'}`}>
+                  <div className={`${isMobile ? 'flex gap-4 whitespace-nowrap' : 'flex flex-wrap justify-center gap-3'}`}>
                   {enhancedData.map((entry, index) => {
                     const gradientIndex = entry.gradientIndex || 0
                     const gradient = GRADIENT_COLORS[gradientIndex]
                     return (
-                      <div key={`legend-${index}`} className="flex items-center gap-2 transition-opacity duration-200 hover:opacity-80 min-w-0 flex-shrink-0">
+                      <div key={`legend-${index}`} className={`flex items-center gap-2 transition-opacity duration-200 hover:opacity-80 ${isMobile ? 'min-w-fit' : 'min-w-0 flex-shrink-0'}`}>
                         <div 
                           className="w-4 h-4 rounded-full shadow-md flex-shrink-0" 
                           style={{ 
                             background: `linear-gradient(135deg, ${gradient.start}, ${gradient.end})` 
                           }} 
                         />
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">{entry.name}</span>
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-gray-700 dark:text-gray-300 truncate`}>{entry.name}</span>
                       </div>
                     )
                   })}
+                  </div>
                 </div>
               )
             }}
