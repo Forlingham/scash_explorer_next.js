@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Github, Twitter, Globe, MessageCircle, ExternalLink } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { getServerTranslations } from '@/i18n/server-i18n'
+import pkg from '../package.json'
 
 export async function Footer() {
   const { t } = await getServerTranslations()
@@ -154,7 +155,7 @@ export async function Footer() {
         <Separator className="my-4" />
 
         <div className="flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} SCASH Network</p>
+          <p>© {new Date().getFullYear()} SCASH Network · v{pkg.version}</p>
           <p className="mt-2 md:mt-0">
             {t('common.starsIssuesPRsWelcome')}
           </p>
