@@ -13,9 +13,10 @@ interface RpcConsoleProps {
     username: string
     password: string
   }
+  rpcUrl: string
 }
 
-export default function RpcConsole({ methods, auth }: RpcConsoleProps) {
+export default function RpcConsole({ methods, auth, rpcUrl }: RpcConsoleProps) {
   const [method, setMethod] = useState<string>(methods[0] || '')
   const [paramsText, setParamsText] = useState<string>('[]')
   const [endpoint, setEndpoint] = useState<string>('/rpc')
@@ -76,6 +77,10 @@ export default function RpcConsole({ methods, auth }: RpcConsoleProps) {
     <div className="rounded-lg border p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
         <div className="md:col-span-1">
+          <div className="text-sm text-muted-foreground mb-1">接口路径</div>
+          <span>{rpcUrl}</span>
+        </div>
+        <div className="md:col-span-1">
           <div className="text-sm text-muted-foreground mb-1">方法</div>
           <Select value={method} onValueChange={setMethod}>
             <SelectTrigger className="w-full">
@@ -90,10 +95,7 @@ export default function RpcConsole({ methods, auth }: RpcConsoleProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-1">
-          <div className="text-sm text-muted-foreground mb-1">接口路径</div>
-          <Input value={endpoint} onChange={(e) => setEndpoint(e.target.value)} placeholder="/rpc" />
-        </div>
+
         <div className="md:col-span-1 flex items-end">
           <Button onClick={callRpc} disabled={!method || loading} className="w-full">
             {loading ? '发送中...' : '发送请求'}

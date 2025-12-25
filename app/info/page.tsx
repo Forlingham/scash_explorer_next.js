@@ -4,11 +4,19 @@ import { explorerApiInfoApi } from '@/lib/http-server'
 import RpcConsole from '@/components/rpc-console'
 import { getServerTranslations } from '@/i18n/server-i18n'
 import { Info } from 'lucide-react'
+import { headers } from 'next/headers'
 
 export default async function InfoPage() {
   const { t } = await getServerTranslations()
   const info = await explorerApiInfoApi()
   const methods = info?.rpc_support_methods || []
+
+  const headersList = await headers()
+  const host = headersList.get('host')
+  const protocol = headersList.get('x-forwarded-proto') || 'http'
+  const currentOrigin = host ? `${protocol}://${host}` : ''
+
+  const rpcUrl = currentOrigin + '/api/rpc'
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -43,24 +51,18 @@ export default async function InfoPage() {
               <div className="text-sm text-muted-foreground">内容类型</div>
               <div className="font-medium">{info?.contentType || '-'}</div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-2xl">登录信息</CardTitle>
-          <CardDescription>用于访问 RPC 接口</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2">
             <div>
               <div className="text-sm text-muted-foreground">用户名</div>
-              <div className="font-mono">{info?.rpc_auth?.username || '-'}</div>
+              <div className="font-medium">{info?.rpc_auth?.username || '-'}</div>
             </div>
             <div>
               <div className="text-sm text-muted-foreground">密码</div>
-              <div className="font-mono">{info?.rpc_auth?.password || '-'}</div>
+              <div className="font-medium">{info?.rpc_auth?.password || '-'}</div>
+            </div>
+            <div>
+              <div className="text-sm text-muted-foreground">URL</div>
+              <div className="font-medium">{rpcUrl}</div>
             </div>
           </div>
         </CardContent>
@@ -77,7 +79,9 @@ export default async function InfoPage() {
           ) : (
             <div className="flex flex-wrap gap-2">
               {methods.map((m) => (
-                <Badge key={m} variant="secondary" className="font-mono">{m}</Badge>
+                <Badge key={m} variant="secondary" className="font-mono">
+                  {m}
+                </Badge>
               ))}
             </div>
           )}
@@ -90,7 +94,7 @@ export default async function InfoPage() {
           <CardDescription>选择方法，填写参数并发送请求</CardDescription>
         </CardHeader>
         <CardContent>
-          <RpcConsole methods={methods} auth={info?.rpc_auth} />
+          <RpcConsole methods={methods} auth={info?.rpc_auth} rpcUrl={rpcUrl} />
         </CardContent>
       </Card>
     </div>
