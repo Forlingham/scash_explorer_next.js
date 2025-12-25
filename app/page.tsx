@@ -17,6 +17,7 @@ import { satoshisToBtc } from '@/lib/currency.utils'
 import Decimal from 'decimal.js'
 import { FormattedAmount } from '@/components/formatted-amount'
 import { InactiveStorageChart } from '@/components/charts/inactive-storage-chart'
+import { MempoolTransactionsChart } from '@/components/charts/mempool-transactions-chart'
 
 export default async function HomePage() {
   const { t } = await getServerTranslations()
@@ -293,6 +294,11 @@ export default async function HomePage() {
         </Card>
       </div>
 
+      {/* Mempool Transactions Module */}
+      <div className="mb-8">
+        <MempoolTransactionsChart />
+      </div>
+
       {/* 不活跃地址统计 */}
       <div className="mb-8">
         <Card className="border-primary/20">
@@ -336,7 +342,7 @@ export default async function HomePage() {
                     '#10B981', // emerald
                     '#FB7185', // rose
                     '#6366F1', // indigo
-                    '#22D3EE'  // cyan
+                    '#22D3EE' // cyan
                   ]
 
                   const addressSegmentsInactive = inactiveStatsWithPercentages.map(({ data, addressPercentage }, idx) => ({
@@ -368,8 +374,8 @@ export default async function HomePage() {
                     valueText: `${satoshisToBtc(activeBalance.toString())} ${BASE_SYMBOL}`
                   }
 
-                  const addressSegments = [ ...addressSegmentsInactive,activeAddressSegment]
-                  const balanceSegments = [ ...balanceSegmentsInactive,activeBalanceSegment]
+                  const addressSegments = [...addressSegmentsInactive, activeAddressSegment]
+                  const balanceSegments = [...balanceSegmentsInactive, activeBalanceSegment]
 
                   return (
                     <InactiveStorageChart
@@ -381,7 +387,6 @@ export default async function HomePage() {
                   )
                 })()}
               </div>
-
             </div>
           </CardContent>
         </Card>

@@ -667,6 +667,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'mempool.txid': 'ID транзакции',
     'mempool.feeRate': 'Ставка комиссии',
     'mempool.size': 'Размер',
+    'mempool.description': 'Распределение транзакций, ожидающих подтверждения',
+    'mempool.highFee': 'Транзакции с высокой комиссией',
 
     // Whale Watcher
     'whale.title': 'Наблюдатель китов',

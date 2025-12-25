@@ -203,3 +203,5 @@ interface Rpcauth {
 export function explorerApiInfoApi() {
   return serverHttpClient.get<ExplorerApiInfo>('', {})
 }
+
+
