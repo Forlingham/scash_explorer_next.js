@@ -497,6 +497,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.changeOutput': '找零',
     'tx.miningReward': '挖矿奖励',
     'tx.coinbaseTransaction': '币基交易',
+    'tx.poolTransaction': '内存池交易',
+    'tx.poolTransactionDesc': '正在被打包的交易',
     'address.lastSeen': '最后活跃时间',
     'address.firstSeen': '首次活跃时间',
 

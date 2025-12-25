@@ -106,12 +106,19 @@ export default async function TransactionDetailPage({ params }: { params: { id: 
                     </div>
                   </div>
                 </div>
-                <div>
-                  <span className="text-sm font-medium text-muted-foreground block mb-1">{t('tx.blockHeight')}</span>
-                  <Link href={`/block/${txData.blockHeight}/20/1`} className="text-primary hover:underline font-semibold">
-                    {txData.blockHeight.toLocaleString()}
-                  </Link>
-                </div>
+                {txData.blockHeight >= 0 ? (
+                  <div>
+                    <span className="text-sm font-medium text-muted-foreground block mb-1">{t('tx.blockHeight')}</span>
+                    <Link href={`/block/${txData.blockHeight}/20/1`} className="text-primary hover:underline font-semibold">
+                      {txData.blockHeight.toLocaleString()}
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    <span className="text-sm font-medium text-muted-foreground block mb-1">{t('tx.poolTransaction')}</span>
+                    <span className="font-semibold">{t('tx.poolTransactionDesc')}</span>
+                  </div>
+                )}
                 <div>
                   <span className="text-sm font-medium text-muted-foreground block mb-1">{t('tx.weight')}</span>
                   <span className="font-semibold">{txData.weight} WU</span>

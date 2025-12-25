@@ -27,8 +27,6 @@ function AddressBlock({
     ? 'bg-orange-100 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'
     : 'bg-green-100 dark:bg-green-900/20 border-green-200 dark:border-green-800'
 
-
-
   // 使用条件渲染来避免类型错误
   return isHighlighted ? (
     <div className={`block p-2 rounded-lg border ${bgColor} cursor-default`}>
@@ -93,7 +91,6 @@ interface TransactionCardProps {
 }
 
 export default function TransactionCard({ tx, t, highlightAddress, isTx = false }: TransactionCardProps) {
-
   const { mergedSenders, mergedReceivers } = mergeSendersReceivers(tx.senders, tx.receivers)
 
   return (
@@ -212,12 +209,18 @@ export default function TransactionCard({ tx, t, highlightAddress, isTx = false 
             <div className="flex flex-col items-center gap-1 p-2">
               <ArrowRightLeft className="h-5 w-5 text-muted-foreground" />
               <div className="text-xs text-muted-foreground text-center">
-                <div>#{tx.blockHeight}</div>
-                <div className="mt-1">
-                  <Link href={`/block/${tx.blockHeight}/20/1`} className="text-blue-600 hover:underline">
-                    {t('nav.blocks')}
-                  </Link>
-                </div>
+                {tx.blockHeight >= 0 ? (
+                  <>
+                    <div>#{tx.blockHeight}</div>
+                    <div className="mt-1">
+                      <Link href={`/block/${tx.blockHeight}/20/1`} className="text-blue-600 hover:underline">
+                        {t('nav.blocks')}
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <div>{t('tx.poolTransactionDesc')}</div>
+                )}
               </div>
             </div>
           </div>
