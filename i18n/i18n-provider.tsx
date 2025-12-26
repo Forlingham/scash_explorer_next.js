@@ -89,12 +89,16 @@ const translations: Record<Locale, Record<string, string>> = {
     'richList.balance': 'Balance',
 
     // Mempool
-    'mempool.title': 'Mempool',
-    'mempool.subtitle': 'Pending transactions',
-    'mempool.total': 'Total transactions in mempool',
-    'mempool.txid': 'Transaction ID',
+    'mempool.title': 'Mempool Transaction Distribution',
+    'mempool.description': 'Transaction fee rate and size distribution in the mempool awaiting confirmation',
     'mempool.feeRate': 'Fee Rate',
     'mempool.size': 'Size',
+    'mempool.feeRate2': 'Fee Rate',
+    'mempool.fee': 'Fee',
+    'mempool.amount': 'Amount',
+    'mempool.highFee': 'High Fee Transactions (Top 5)',
+    'mempool.medianFee': 'Median Fee',
+    'mempool.totalSize': 'Total Size',
 
     // Whale Watcher
     'whale.title': 'Whale Watcher',
@@ -213,6 +217,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.changeOutput': 'Change',
     'tx.miningReward': 'Mining Reward',
     'tx.coinbaseTransaction': 'Coinbase Transaction',
+    'tx.poolTransaction': 'Mempool Transaction',
+    'tx.poolTransactionDesc': 'Transaction pending confirmation',
     'address.lastSeen': 'Last Seen',
     'address.firstSeen': 'First Seen',
 
@@ -373,12 +379,16 @@ const translations: Record<Locale, Record<string, string>> = {
     'richList.balance': '余额',
 
     // Mempool
-    'mempool.title': '内存池',
-    'mempool.subtitle': '待确认交易',
-    'mempool.total': '内存池交易总数',
-    'mempool.txid': '交易ID',
+    'mempool.title': '内存池交易分布',
+    'mempool.description': '内存池中等待确认的交易费率与大小分布',
     'mempool.feeRate': '手续费率',
     'mempool.size': '大小',
+    'mempool.feeRate2': '费率',
+    'mempool.fee': '手续费',
+    'mempool.amount': '金额',
+    'mempool.highFee': '高费率交易 (Top 5)',
+    'mempool.medianFee': '中值交易费',
+    'mempool.totalSize': '总大小',
 
     // Whale Watcher
     'whale.title': '大户追踪',
@@ -661,14 +671,16 @@ const translations: Record<Locale, Record<string, string>> = {
     'richList.balance': 'Баланс',
 
     // Mempool
-    'mempool.title': 'Мемпул',
-    'mempool.subtitle': 'Ожидающие транзакции',
-    'mempool.total': 'Всего транзакций в мемпуле',
-    'mempool.txid': 'ID транзакции',
+    'mempool.title': 'Распределение транзакций в мемпуле',
+    'mempool.description': 'Распределение ставок комиссий и размеров транзакций, ожидающих подтверждения в мемпуле',
     'mempool.feeRate': 'Ставка комиссии',
     'mempool.size': 'Размер',
-    'mempool.description': 'Распределение транзакций, ожидающих подтверждения',
-    'mempool.highFee': 'Транзакции с высокой комиссией',
+    'mempool.feeRate2': 'Ставка',
+    'mempool.fee': 'Комиссия',
+    'mempool.amount': 'Сумма',
+    'mempool.highFee': 'Транзакции с высокой комиссией (Топ 5)',
+    'mempool.medianFee': 'Медианная комиссия',
+    'mempool.totalSize': 'Общий размер',
 
     // Whale Watcher
     'whale.title': 'Наблюдатель китов',
@@ -787,6 +799,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.changeOutput': 'Сдача',
     'tx.miningReward': 'Награда за майнинг',
     'tx.coinbaseTransaction': 'Коинбазовая транзакция',
+    'tx.poolTransaction': 'Транзакция в мемпуле',
+    'tx.poolTransactionDesc': 'Транзакция ожидает включения в блок',
     'address.lastSeen': 'Последняя активность',
     'address.firstSeen': 'Первая активность',
 
