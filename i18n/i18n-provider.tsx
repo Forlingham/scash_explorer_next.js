@@ -223,8 +223,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.firstSeen': 'First Seen',
 
     // Inactive Addresses
-    'inactiveAddresses.title': 'Inactive Addresses',
-    'inactiveAddresses.subtitle': 'Statistics by inactive addresses',
+    'inactiveAddresses.title': 'Address Statistics',
+    'inactiveAddresses.subtitle': 'Address count and balance distribution by time period',
     'inactiveAddresses.totalAddresses': 'Total Addresses',
     'inactiveAddresses.totalBalance': 'Total Balance',
     'inactiveAddresses.addressCount': 'Address Count',
@@ -292,7 +292,34 @@ const translations: Record<Locale, Record<string, string>> = {
     hours_ago: 'hours ago',
     days_ago: 'days ago',
     months_ago: 'months ago',
-    years_ago: 'years ago'
+    years_ago: 'years ago',
+
+    //info
+    'info.rpcInterface': 'RPC Interface Information',
+    'info.rpcMethods': 'List of currently public RPC methods and testing tool',
+    'info.serviceInfo': 'Service Information',
+    'info.serviceInfoDesc': 'Name, version, description and content type',
+    'info.name': 'Name',
+    'info.version': 'Version',
+    'info.description': 'Description',
+    'info.contentType': 'Content Type',
+    'info.username': 'Username',
+    'info.password': 'Password',
+    'info.url': 'Address Link (URL)',
+    'info.publicMethods': 'Public Methods',
+    'info.rpcSupportMethods': 'rpc_support_methods from interface response',
+    'info.noPublicMethods': 'No public methods available',
+    'info.rpcTest': 'RPC Test',
+    'info.rpcTestDesc': 'Select method, fill parameters and send request',
+    'info.endpoint': 'Endpoint',
+    'info.method': 'Method',
+    'info.selectMethod': 'Select Method',
+    'info.sendRequest': 'Send Request',
+    'info.send': 'Send',
+    'info.params': 'Parameters (JSON or comma-separated)',
+    'info.paramsPlaceholder': 'e.g.: ["param1", 2] or param1,2',
+    'info.response': 'Response',
+    'info.noResponse': 'No response data yet'
   },
   zh: {
     // Header
@@ -512,8 +539,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.lastSeen': '最后活跃时间',
     'address.firstSeen': '首次活跃时间',
 
-    'inactiveAddresses.title': '不活跃地址',
-    'inactiveAddresses.subtitle': '按不同时间段统计的不活跃地址数量和余额分布',
+    'inactiveAddresses.title': '地址统计情况',
+    'inactiveAddresses.subtitle': '按不同时间段统计地址数量和余额分布',
     'inactiveAddresses.totalAddresses': '总地址数',
     'inactiveAddresses.totalBalance': '总余额',
     'inactiveAddresses.addressCount': '地址数量',
@@ -584,7 +611,34 @@ const translations: Record<Locale, Record<string, string>> = {
     hours_ago: '小时前',
     days_ago: '天前',
     months_ago: '月前',
-    years_ago: '年前'
+    years_ago: '年前',
+
+    //info
+    'info.rpcInterface': 'RPC 接口信息',
+    'info.rpcMethods': '当前公开的 RPC 方法列表与测试工具',
+    'info.serviceInfo': '服务信息',
+    'info.serviceInfoDesc': '名称、版本、描述与内容类型',
+    'info.name': '名称',
+    'info.version': '版本',
+    'info.description': '描述',
+    'info.contentType': '内容类型',
+    'info.username': '用户名',
+    'info.password': '密码',
+    'info.url': '地址链接（URL）',
+    'info.publicMethods': '公开方法',
+    'info.rpcSupportMethods': '来自接口返回的 rpc_support_methods',
+    'info.noPublicMethods': '暂无公开方法',
+    'info.rpcTest': 'RPC 测试',
+    'info.rpcTestDesc': '选择方法，填写参数并发送请求',
+    'info.endpoint': '接口路径',
+    'info.method': '方法',
+    'info.selectMethod': '选择方法',
+    'info.sendRequest': '发送请求',
+    'info.send': '发送请求',
+    'info.params': '参数（JSON 或逗号分隔）',
+    'info.paramsPlaceholder': '例如: ["param1", 2] 或 param1,2',
+    'info.response': '返回',
+    'info.noResponse': '暂无返回数据'
   },
   ru: {
     // Header
@@ -805,8 +859,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.firstSeen': 'Первая активность',
 
     // Inactive Addresses
-    'inactiveAddresses.title': 'Неактивные адреса',
-    'inactiveAddresses.subtitle': 'Статистика по неактивным адресам',
+    'inactiveAddresses.title': 'Статистика адресов',
+    'inactiveAddresses.subtitle': 'Статистика количества адресов и распределения балансов по временным периодам',
     'inactiveAddresses.totalAddresses': 'Общее количество адресов',
     'inactiveAddresses.totalBalance': 'Общий баланс',
     'inactiveAddresses.addressCount': 'Количество адресов',
@@ -875,7 +929,34 @@ const translations: Record<Locale, Record<string, string>> = {
     hours_ago: 'часов назад',
     days_ago: 'дней назад',
     months_ago: 'месяцев назад',
-    years_ago: 'лет назад'
+    years_ago: 'лет назад',
+
+    //info
+    'info.rpcInterface': 'Информация о RPC-интерфейсе',
+    'info.rpcMethods': 'Список открытых RPC-методов и инструмент тестирования',
+    'info.serviceInfo': 'Информация о сервисе',
+    'info.serviceInfoDesc': 'Название, версия, описание и тип содержимого',
+    'info.name': 'Название',
+    'info.version': 'Версия',
+    'info.description': 'Описание',
+    'info.contentType': 'Тип содержимого',
+    'info.username': 'Имя пользователя',
+    'info.password': 'Пароль',
+    'info.url': 'URL-адрес',
+    'info.publicMethods': 'Открытые методы',
+    'info.rpcSupportMethods': 'rpc_support_methods из ответа интерфейса',
+    'info.noPublicMethods': 'Нет открытых методов',
+    'info.rpcTest': 'Тест RPC',
+    'info.rpcTestDesc': 'Выберите метод, заполните параметры и отправьте запрос',
+    'info.endpoint': 'Конечная точка',
+    'info.method': 'Метод',
+    'info.selectMethod': 'Выбрать метод',
+    'info.sendRequest': 'Отправить запрос',
+    'info.send': 'Отправить запрос',
+    'info.params': 'Параметры (JSON или через запятую)',
+    'info.paramsPlaceholder': 'Например: ["param1", 2] или param1,2',
+    'info.response': 'Ответ',
+    'info.noResponse': 'Нет данных для отображения'
   }
 }
 

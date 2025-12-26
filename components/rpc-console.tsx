@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { getClientTranslations } from '@/i18n/client-i18n'
 
 interface RpcConsoleProps {
   methods: string[]
@@ -25,6 +26,8 @@ export default function RpcConsole({ methods, auth, rpcUrl }: RpcConsoleProps) {
   const [error, setError] = useState<string | null>(null)
   const [username, setUsername] = useState<string>(auth?.username || '')
   const [password, setPassword] = useState<string>(auth?.password || '')
+
+  const { t } = getClientTranslations()
 
   const client = axios.create({
     baseURL: '/api',
@@ -77,14 +80,14 @@ export default function RpcConsole({ methods, auth, rpcUrl }: RpcConsoleProps) {
     <div className="rounded-lg border p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
         <div className="md:col-span-1">
-          <div className="text-sm text-muted-foreground mb-1">接口路径</div>
+          <div className="text-sm text-muted-foreground mb-1">{t('info.endpoint')}</div>
           <span>{rpcUrl}</span>
         </div>
         <div className="md:col-span-1">
-          <div className="text-sm text-muted-foreground mb-1">方法</div>
+          <div className="text-sm text-muted-foreground mb-1">{t('info.method')}</div>
           <Select value={method} onValueChange={setMethod}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="选择方法" />
+              <SelectValue placeholder={t('info.selectMethod')} />
             </SelectTrigger>
             <SelectContent>
               {methods.map((m) => (
@@ -98,41 +101,41 @@ export default function RpcConsole({ methods, auth, rpcUrl }: RpcConsoleProps) {
 
         <div className="md:col-span-1 flex items-end">
           <Button onClick={callRpc} disabled={!method || loading} className="w-full">
-            {loading ? '发送中...' : '发送请求'}
+            {loading ? t('info.sendRequest') : t('info.send')}
           </Button>
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
-          <div className="text-sm text-muted-foreground mb-1">用户名</div>
-          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username" />
+          <div className="text-sm text-muted-foreground mb-1">{t('info.username')}</div>
+          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t('info.username')} disabled={true} />
         </div>
         <div>
-          <div className="text-sm text-muted-foreground mb-1">密码</div>
-          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
+          <div className="text-sm text-muted-foreground mb-1">{t('info.password')}</div>
+          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('info.password')} disabled={true} />
         </div>
       </div>
 
       <div className="mt-4">
-        <div className="text-sm text-muted-foreground mb-1">参数（JSON 或逗号分隔）</div>
+        <div className="text-sm text-muted-foreground mb-1">{t('info.params')}</div>
         <Textarea
           rows={4}
           value={paramsText}
           onChange={(e) => setParamsText(e.target.value)}
-          placeholder='例如: ["param1", 2] 或 param1,2'
+          placeholder={t('info.paramsPlaceholder')}
         />
       </div>
 
       <div className="mt-4">
-        <div className="text-sm text-muted-foreground mb-1">返回</div>
+        <div className="text-sm text-muted-foreground mb-1">{t('info.response')}</div>
         <div className="rounded-md border p-3 bg-muted/30">
           {error ? (
             <pre className="text-destructive text-sm whitespace-pre-wrap break-all">{error}</pre>
           ) : result ? (
             <pre className="text-xs md:text-sm whitespace-pre-wrap break-all">{JSON.stringify(result, null, 2)}</pre>
           ) : (
-            <div className="text-muted-foreground text-sm">暂无数据</div>
+            <div className="text-muted-foreground text-sm">{t('info.noResponse')}</div>
           )}
         </div>
       </div>

@@ -23,45 +23,45 @@ export default async function InfoPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold flex items-center gap-3">
           <Info className="h-7 w-7 text-primary" />
-          RPC 接口信息
+          {t('info.rpcInterface')}
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">当前公开的 RPC 方法列表与测试工具</p>
+        <p className="text-sm text-muted-foreground mt-1">{t('info.rpcMethods')}</p>
       </div>
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle className="text-2xl">服务信息</CardTitle>
-          <CardDescription>名称、版本、描述与内容类型</CardDescription>
+          <CardTitle className="text-2xl">{t('info.serviceInfo')}</CardTitle>
+          <CardDescription>{t('info.serviceInfoDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <div className="text-sm text-muted-foreground">名称</div>
+              <div className="text-sm text-muted-foreground">{t('info.name')}</div>
               <div className="font-medium">{info?.name || '-'}</div>
             </div>
             <div>
-              <div className="text-sm text-muted-foreground">版本</div>
+              <div className="text-sm text-muted-foreground">{t('info.version')}</div>
               <div className="font-medium">{info?.version || '-'}</div>
             </div>
             <div>
-              <div className="text-sm text-muted-foreground">描述</div>
+              <div className="text-sm text-muted-foreground">{t('info.description')}</div>
               <div className="font-medium">{info?.description || '-'}</div>
             </div>
             <div>
-              <div className="text-sm text-muted-foreground">内容类型</div>
+              <div className="text-sm text-muted-foreground">{t('info.contentType')}</div>
               <div className="font-medium">{info?.contentType || '-'}</div>
             </div>
 
             <div>
-              <div className="text-sm text-muted-foreground">用户名</div>
+              <div className="text-sm text-muted-foreground">{t('info.username')}</div>
               <div className="font-medium">{info?.rpc_auth?.username || '-'}</div>
             </div>
             <div>
-              <div className="text-sm text-muted-foreground">密码</div>
+              <div className="text-sm text-muted-foreground">{t('info.password')}</div>
               <div className="font-medium">{info?.rpc_auth?.password || '-'}</div>
             </div>
             <div>
-              <div className="text-sm text-muted-foreground">URL</div>
+              <div className="text-sm text-muted-foreground">{t('info.url')}</div>
               <div className="font-medium">{rpcUrl}</div>
             </div>
           </div>
@@ -70,12 +70,12 @@ export default async function InfoPage() {
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle className="text-2xl">公开方法</CardTitle>
-          <CardDescription>来自接口返回的 rpc_support_methods</CardDescription>
+          <CardTitle className="text-2xl">{t('info.publicMethods')}</CardTitle>
+          <CardDescription>{t('info.rpcSupportMethods')}</CardDescription>
         </CardHeader>
         <CardContent>
           {methods.length === 0 ? (
-            <div className="text-muted-foreground text-sm">暂无公开方法</div>
+            <div className="text-muted-foreground text-sm">{t('info.noPublicMethods')}</div>
           ) : (
             <div className="flex flex-wrap gap-2">
               {methods.map((m) => (
@@ -90,8 +90,8 @@ export default async function InfoPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">RPC 测试</CardTitle>
-          <CardDescription>选择方法，填写参数并发送请求</CardDescription>
+          <CardTitle className="text-2xl">{t('info.rpcTest')}</CardTitle>
+          <CardDescription>{t('info.rpcTestDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <RpcConsole methods={methods} auth={info?.rpc_auth} rpcUrl={rpcUrl} />
