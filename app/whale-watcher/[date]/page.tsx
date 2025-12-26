@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Users, TrendingUp, TrendingDown, PieChart } from 'lucide-react'
+import { Users, TrendingUp, TrendingDown, PieChart, Crown, Medal, Award } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
@@ -10,6 +10,7 @@ import { satoshisToBtc } from '@/lib/currency.utils'
 import { BASE_SYMBOL } from '@/lib/const'
 import { PriceChange } from '@/components/ui/price-change'
 import { PieChartComponent } from '@/components/pie-chart'
+import { AddressTags } from '@/components/address-tags'
 
 interface WhaleWatcherPageProps {
   params: {
@@ -34,7 +35,8 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
       rankChange: item.rankChange || 0,
       balance: balance,
       balanceChange: satoshisToBtc(item.balanceChange || 0),
-      isNew: item.rankChange === null
+      isNew: item.rankChange === null,
+      tags: item.tags || []
     }
   })
 
@@ -86,7 +88,12 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
             <CardDescription>{t('whale.addressBalanceDistributionDescription')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <PieChartComponent data={balanceChartData} dataKey="count" valueLabel={t('whale.addressCount')} title={t('whale.addressBalanceDistributionTitle')} />
+            <PieChartComponent
+              data={balanceChartData}
+              dataKey="count"
+              valueLabel={t('whale.addressCount')}
+              title={t('whale.addressBalanceDistributionTitle')}
+            />
           </CardContent>
         </Card>
 
@@ -145,12 +152,31 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
                 {whaleData.map((whale) => (
                   <TableRow key={whale.address}>
                     <TableCell className="font-mono text-sm">
-                      <Link href={`/address/${whale.address}`} className="text-sm text-primary hover:underline flex items-center gap-1">
-                        {whale.address}
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link href={`/address/${whale.address}`} className="text-sm text-primary hover:underline flex items-center gap-1">
+                          {whale.address}
+                        </Link>
+                        <AddressTags tags={whale.tags} />
+                      </div>
                     </TableCell>
                     <TableCell className="text-center">
-                      <Badge variant="secondary">#{whale.currentRank}</Badge>
+                      {whale.currentRank === 1 ? (
+                        <Badge className="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 border-yellow-200">
+                          <Crown className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                        </Badge>
+                      ) : whale.currentRank === 2 ? (
+                        <Badge className="bg-slate-300 hover:bg-slate-400 text-slate-800 border-slate-200">
+                          <Medal className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                        </Badge>
+                      ) : whale.currentRank === 3 ? (
+                        <Badge className="bg-orange-300 hover:bg-orange-400 text-orange-900 border-orange-200">
+                          <Award className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                        </Badge>
+                      ) : (
+                        <Badge variant="secondary" className="font-mono">
+                          #{whale.currentRank}
+                        </Badge>
+                      )}
                     </TableCell>
                     <TableCell className="text-center">
                       {whale.isNew ? (
@@ -192,7 +218,27 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
                   <Link href={`/address/${whale.address}`} className="font-mono text-sm text-primary hover:underline break-all">
                     {whale.address}
                   </Link>
-                  <Badge variant="secondary">#{whale.currentRank}</Badge>
+
+                  {whale.currentRank === 1 ? (
+                    <Badge className="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 border-yellow-200">
+                      <Crown className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                    </Badge>
+                  ) : whale.currentRank === 2 ? (
+                    <Badge className="bg-slate-300 hover:bg-slate-400 text-slate-800 border-slate-200">
+                      <Medal className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                    </Badge>
+                  ) : whale.currentRank === 3 ? (
+                    <Badge className="bg-orange-300 hover:bg-orange-400 text-orange-900 border-orange-200">
+                      <Award className="w-3 h-3 mr-1" /> #{whale.currentRank}
+                    </Badge>
+                  ) : (
+                    <Badge variant="secondary" className="font-mono">
+                      #{whale.currentRank}
+                    </Badge>
+                  )}
+                </div>
+                <div>
+                  <AddressTags tags={whale.tags} />
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
                   <div className="text-muted-foreground">{t('whale.balance')}</div>

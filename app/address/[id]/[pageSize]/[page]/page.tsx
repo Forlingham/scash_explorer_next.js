@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Wallet, ArrowUpRight, ArrowDownLeft, Activity, Pickaxe, Link2, Users, Tag as TagIcon } from 'lucide-react'
+import { Wallet, ArrowUpRight, ArrowDownLeft, Activity, Pickaxe } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
@@ -17,6 +17,7 @@ import { formatTime } from '@/lib/serverUtils'
 import Decimal from 'decimal.js'
 import AddAddressTagButton from '@/components/address-add-tag-button'
 import AddressTransactionGraphG6 from '@/components/address-transaction-graph-g6'
+import { AddressTags } from '@/components/address-tags'
 
 export default async function AddressDetailPage({
   params
@@ -141,55 +142,7 @@ export default async function AddressDetailPage({
             <p className="text-sm text-muted-foreground font-mono break-all">{addressData.address}</p>
             <CopyButton textToCopy={addressData.address} title={t('common.copy')} />
           </div>
-          {addressTags.length > 0 && (
-            <div className="mt-3">
-              <div className="flex flex-wrap gap-2">
-                {addressTags.map((tag, idx) => {
-                  const type = (tag.type || '').toLowerCase()
-                  const isWebsite = type === 'website'
-                  const isGroup = type === 'group_chat'
-                  const isText = !isWebsite && !isGroup
-
-                  const hrefCandidate = (tag.description || '').trim() || (tag.name || '').trim()
-                  const href = /^https?:\/\//i.test(hrefCandidate) ? hrefCandidate : undefined
-
-                  const commonClasses = 'border px-2 py-0.5 text-xs rounded-md inline-flex items-center gap-1'
-                  const textClasses = 'bg-muted/30 text-muted-foreground border-muted'
-                  const websiteClasses =
-                    'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800'
-                  const groupClasses =
-                    'bg-violet-100 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800'
-
-                  const classes = `${commonClasses} ${isWebsite ? websiteClasses : isGroup ? groupClasses : textClasses}`
-
-                  const Icon = isWebsite ? Link2 : isGroup ? Users : TagIcon
-
-                  return href && (isWebsite || isGroup) ? (
-                    <a
-                      key={idx}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes}
-                      title={tag.description || tag.name}
-                    >
-                      <Icon className="size-3" />
-                      <span className="truncate max-w-[200px]" title={tag.name}>
-                        {tag.name}
-                      </span>
-                    </a>
-                  ) : (
-                    <span key={idx} className={classes} title={tag.description || tag.name}>
-                      <Icon className="size-3" />
-                      <span className="truncate max-w-[200px]" title={tag.name}>
-                        {tag.name}
-                      </span>
-                    </span>
-                  )
-                })}
-              </div>
-            </div>
-          )}
+          <AddressTags tags={addressTags} />
         </div>
         <div className="flex items-center gap-10">
           <div>

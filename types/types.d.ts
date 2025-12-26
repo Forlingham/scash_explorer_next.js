@@ -78,6 +78,7 @@ interface WhaleChangesType {
   currentBalance: string
   rankChange: null | number
   balanceChange: null | string
+  tags: AddressTagType[]
 }
 
 interface BalanceDistribution {
@@ -212,10 +213,11 @@ interface AddressDetailType {
 }
 
 interface AddressTagType {
-  name: string;
-  type: 'text' | 'website' | 'group_chat';
-  description: string;
-  source: null;
+  name: string
+  type: 'text' | 'website' | 'group_chat'
+  description: string
+  source: null
+  sortOrder?: number
 }
 
 interface AddressTransactionsType {
@@ -254,10 +256,10 @@ interface Summary {
   description: string
 }
 interface Pagination2 {
-  page: number;
-  pageSize: number;
-  total: number;
-  totalPages: number;
+  page: number
+  pageSize: number
+  total: number
+  totalPages: number
 }
 interface Address {
   address: string
@@ -269,18 +271,17 @@ interface Address {
   inactiveDays: number
 }
 
-
 interface GraphType {
-  center: string;
-  centerTags: AddressTagType[];
-  incoming: Incoming[];
-  outgoing: Incoming[];
+  center: string
+  centerTags: AddressTagType[]
+  incoming: Incoming[]
+  outgoing: Incoming[]
 }
 
 interface Incoming {
-  address: string;
-  txid: string;
-  amount: number;
-  timestamp: string;
-  tags: AddressTagType[];
+  address: string
+  txid: string
+  amount: number
+  timestamp: string
+  tags: AddressTagType[]
 }
