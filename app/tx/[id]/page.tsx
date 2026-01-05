@@ -1,22 +1,28 @@
-import Link from 'next/link'
-import { ArrowRightLeft, Hash, Coins, FileText, CheckCircle2, AlertCircle } from 'lucide-react'
+import TransactionFlowVisualization from '@/components/charts/transaction-flow-visualization'
+import TransactionCard from '@/components/transaction-card'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { getServerTranslations } from '@/i18n/server-i18n'
 import { transactionDetailApi } from '@/lib/http-server'
-import TransactionCard from '@/components/transaction-card'
-import TransactionFlowVisualization from '@/components/charts/transaction-flow-visualization'
-import { formatTime, formatTimeDiff } from '@/lib/serverUtils'
-import { satoshisToBtc } from '@/lib/currency.utils'
-import { BASE_SYMBOL } from '@/lib/const'
+import { formatTimeDiff } from '@/lib/serverUtils'
+import { AlertCircle, ArrowRightLeft, CheckCircle2 } from 'lucide-react'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import Decimal from 'decimal.js'
-import { mergeSendersReceivers } from '@/lib/utils'
+import ScashDAP from 'scash-dap'
+import { ScashDAPDataDisplay } from '@/components/scash-dap-data-display'
+
+const NETWORK = {
+  messagePrefix: '\x18Scash Signed Message:\n',
+  bech32: 'scash',
+  bip32: { public: 0x0488b21e, private: 0x0488ade4 },
+  pubKeyHash: 0x3c,
+  scriptHash: 0x7d,
+  wif: 0x80
+}
 
 export default async function TransactionDetailPage({ params }: { params: { id: string } & Promise<any> }) {
   const { id } = params
   const { t } = await getServerTranslations()
+  const scashDAP = new ScashDAP(NETWORK)
 
   try {
     const transactionDetailApiRes = await transactionDetailApi(id)
@@ -24,6 +30,17 @@ export default async function TransactionDetailPage({ params }: { params: { id: 
     const processedTransaction = transactionDetailApiRes.processedTransaction
 
     const confirmations = processedTransaction.confirmations
+
+    const scashDAPData = scashDAP.parseDapTransaction(
+      txData.io
+        .filter((io) => !io.amount.startsWith('-'))
+        .sort((a, b) => (a.voutIndex || 0) - (b.voutIndex || 0))
+        .map((io) => ({
+          scriptPubKey: {
+            address: io.address
+          }
+        }))
+    )
 
     return (
       <div className="container mx-auto px-4 py-8">
@@ -148,11 +165,14 @@ export default async function TransactionDetailPage({ params }: { params: { id: 
         <div className="mb-8">
           <TransactionCard tx={processedTransaction} t={t} isTx={true} />
         </div>
+
+        <ScashDAPDataDisplay data={scashDAPData} title={t('tx.scashDAPData')} />
       </div>
     )
   } catch (error) {
+    console.log(error, 'error')
     if (id.length === 64) {
-      redirect(`/block/${id}/20/1`)
+      // redirect(`/block/${id}/20/1`)
     }
   }
 }

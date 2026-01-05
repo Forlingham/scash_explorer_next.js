@@ -18,20 +18,9 @@ import Decimal from 'decimal.js'
 import { FormattedAmount } from '@/components/formatted-amount'
 import { InactiveStorageChart } from '@/components/charts/inactive-storage-chart'
 import { MempoolTransactionsChart } from '@/components/charts/mempool-transactions-chart'
-import ScashDAP from 'scash-dap'
 
 export default async function HomePage() {
   const { t } = await getServerTranslations()
-  console.log(
-    new ScashDAP({
-      messagePrefix: '\x18Scash Signed Message:\n',
-      bech32: 'scash',
-      bip32: { public: 0x0488b21e, private: 0x0488ade4 },
-      pubKeyHash: 0x3c,
-      scriptHash: 0x7d,
-      wif: 0x80
-    }).createDapOutputs("233")
-  )
 
   const homeOverviewApiRes = await homeOverviewApi()
 

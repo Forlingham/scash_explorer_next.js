@@ -219,6 +219,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.coinbaseTransaction': 'Coinbase Transaction',
     'tx.poolTransaction': 'Mempool Transaction',
     'tx.poolTransactionDesc': 'Transaction pending confirmation',
+    'tx.scashDAPData': 'Scash DAP Data',
     'address.lastSeen': 'Last Seen',
     'address.firstSeen': 'First Seen',
 
@@ -536,6 +537,8 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.coinbaseTransaction': '币基交易',
     'tx.poolTransaction': '内存池交易',
     'tx.poolTransactionDesc': '正在被打包的交易',
+    'tx.scashDAPData': 'Scash DAP 数据',
+
     'address.lastSeen': '最后活跃时间',
     'address.firstSeen': '首次活跃时间',
 
@@ -855,6 +858,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.coinbaseTransaction': 'Коинбазовая транзакция',
     'tx.poolTransaction': 'Транзакция в мемпуле',
     'tx.poolTransactionDesc': 'Транзакция ожидает включения в блок',
+    'tx.scashDAPData': 'Данные Scash DAP',
     'address.lastSeen': 'Последняя активность',
     'address.firstSeen': 'Первая активность',
 
