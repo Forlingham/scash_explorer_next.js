@@ -1,5 +1,6 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FileText } from 'lucide-react'
+import { AlertTriangle, FileText } from 'lucide-react'
 import { checkComment } from '@/lib/filter'
 
 interface ScashDAPDataDisplayProps {
@@ -22,7 +23,27 @@ export function ScashDAPDataDisplay({ data, title }: ScashDAPDataDisplayProps) {
       </CardHeader>
       <CardContent>
         {!isClean ? (
-          <div className="text-red-500 text-sm mb-2">警告：包含敏感词</div>
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>警告：包含敏感词</AlertTitle>
+            <AlertDescription>
+              <div className="mt-2 space-y-2">
+                <p>如果你确实需要查看包含敏感词的内容，请下载 Scash-DAP 客户端查看。</p>
+                <p>Scash-DAP 客户端是一个独立的应用程序，用于查看和发布信息到 Scash 网络上工具。</p>
+                <p>
+                  下载地址：{' '}
+                  <a
+                    href="https://github.com/Forlingham/ScashDataAddressProtocol/releases"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium underline underline-offset-4"
+                  >
+                    GitHub Releases
+                  </a>
+                </p>
+              </div>
+            </AlertDescription>
+          </Alert>
         ) : (
           <div className="bg-muted p-4 rounded-md font-mono text-sm whitespace-pre-wrap break-all">{data}</div>
         )}
