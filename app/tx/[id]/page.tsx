@@ -1,4 +1,5 @@
 import TransactionFlowVisualization from '@/components/charts/transaction-flow-visualization'
+import { ScashDAPDataDisplay } from '@/components/scash-dap-data-display'
 import TransactionCard from '@/components/transaction-card'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getServerTranslations } from '@/i18n/server-i18n'
@@ -6,9 +7,7 @@ import { transactionDetailApi } from '@/lib/http-server'
 import { formatTimeDiff } from '@/lib/serverUtils'
 import { AlertCircle, ArrowRightLeft, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import ScashDAP from 'scash-dap'
-import { ScashDAPDataDisplay } from '@/components/scash-dap-data-display'
 
 const NETWORK = {
   messagePrefix: '\x18Scash Signed Message:\n',
@@ -19,8 +18,8 @@ const NETWORK = {
   wif: 0x80
 }
 
-export default async function TransactionDetailPage({ params }: { params: { id: string } & Promise<any> }) {
-  const { id } = params
+export default async function TransactionDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const { t } = await getServerTranslations()
   const scashDAP = new ScashDAP(NETWORK)
 

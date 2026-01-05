@@ -73,7 +73,7 @@ export function NetworkDifficultyChart({
             color: '#10B981',
             fontWeight: 500
           }}
-          formatter={(value: number) => [value.toLocaleString(), text.networkDifficulty]}
+          formatter={(value: any) => [value.toLocaleString(), text.networkDifficulty]}
           labelFormatter={(label: string) => `${text.date}: ${label}`}
         />
         <Line

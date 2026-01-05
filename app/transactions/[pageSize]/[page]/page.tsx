@@ -1,12 +1,9 @@
-import Link from 'next/link'
-import { Activity, ArrowRightLeft } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Pagination } from '@/components/pagination'
-import { getServerTranslations } from '@/i18n/server-i18n'
-import { redirect } from 'next/navigation'
-import { transactionsApi, serverHttpClient } from '@/lib/http-server'
-import { formatHash, formatAddress } from '@/lib/serverUtils'
 import TransactionCard from '@/components/transaction-card'
+import { getServerTranslations } from '@/i18n/server-i18n'
+import { transactionsApi } from '@/lib/http-server'
+import { ArrowRightLeft } from 'lucide-react'
+import { redirect } from 'next/navigation'
 
 interface TransactionsPageProps {
   params: {
@@ -17,9 +14,9 @@ interface TransactionsPageProps {
 
 export default async function TransactionsPage({ params }: TransactionsPageProps & { params: Promise<any> }) {
   const { t } = await getServerTranslations()
-
+  
   // 解析参数 - 在Next.js 15中需要await params
-  const { pageSize: pageSizeStr, page: pageStr } = params
+  const { pageSize: pageSizeStr, page: pageStr } = await params
   const pageSize = parseInt(pageSizeStr)
   const currentPage = parseInt(pageStr)
 

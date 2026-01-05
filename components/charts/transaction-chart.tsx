@@ -53,7 +53,7 @@ export function TransactionChart({ data }: TransactionChartProps) {
             color: "#8B3FBF",
             fontWeight: 500,
           }}
-          formatter={(value: number) => [value.toLocaleString(), "Transactions"]}
+          formatter={(value: any) => [value.toLocaleString(), "Transactions"]}
         />
         <Bar dataKey="count" fill="url(#barGradient)" radius={[8, 8, 0, 0]} />
       </BarChart>

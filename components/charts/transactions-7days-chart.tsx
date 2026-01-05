@@ -59,7 +59,7 @@ export function Transactions7DaysChart({
             color: '#8B3FBF',
             fontWeight: 500
           }}
-          formatter={(value: number) => [value.toLocaleString(), text.transactionVolume]}
+          formatter={(value: any) => [value.toLocaleString(), text.transactionVolume]}
           labelFormatter={(label: string) => `${text.date}: ${label}`}
         />
         <Area

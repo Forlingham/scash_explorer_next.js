@@ -1,23 +1,22 @@
-import Link from 'next/link'
-import { Cable as Cube, Clock, Hash, Coins, Zap, ArrowRight, User, AlertCircle } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Pagination } from '@/components/pagination'
 import { BlockTransactionVisualization } from '@/components/charts/block-transaction-visualization'
-import { getServerTranslations } from '@/i18n/server-i18n'
-import { redirect } from 'next/navigation'
-import { blockDetailApi, blockTransactionsApi } from '@/lib/http-server'
+import { Pagination } from '@/components/pagination'
 import TransactionCard from '@/components/transaction-card'
-import { formatTime, formatTimeDiff } from '@/lib/serverUtils'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { getServerTranslations } from '@/i18n/server-i18n'
 import { BASE_SYMBOL } from '@/lib/const'
 import { satoshisToBtc } from '@/lib/currency.utils'
+import { blockDetailApi, blockTransactionsApi } from '@/lib/http-server'
+import { formatTimeDiff } from '@/lib/serverUtils'
+import { AlertCircle, ArrowRight, Cable as Cube, User } from 'lucide-react'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 export default async function BlockDetailPage({ params }: { params: { id: string; pageSize: string; page: string } & Promise<any> }) {
   const { t } = await getServerTranslations()
-  const { id, pageSize: pageSizeStr, page: pageStr } = params
+  const { id, pageSize: pageSizeStr, page: pageStr } = await params
   const pageSize = parseInt(pageSizeStr)
   const currentPage = parseInt(pageStr)
 

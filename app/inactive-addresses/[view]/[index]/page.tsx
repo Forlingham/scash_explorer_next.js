@@ -17,9 +17,12 @@ interface InactiveDetailPageProps {
   }
 }
 
-export default async function InactiveDetailPage({ params, searchParams }: InactiveDetailPageProps & { params: Promise<any> } & { searchParams?: Promise<any> }) {
+export default async function InactiveDetailPage({
+  params,
+  searchParams
+}: InactiveDetailPageProps & { params: Promise<any> } & { searchParams?: Promise<any> }) {
   const { t } = await getServerTranslations()
-  const { view, index } = params
+  const { view, index } = await params
   const sp = searchParams ? await searchParams : {}
   const page = Number(sp?.page ?? 1) || 1
   const pageSize = Number(sp?.pageSize ?? 20) || 20
@@ -80,13 +83,13 @@ export default async function InactiveDetailPage({ params, searchParams }: Inact
               <span className="text-destructive">{errorMsg}</span>
             ) : apiData?.summary ? (
               <span>
-                {t('common.totalAddresses')} {apiData.summary.totalAddresses.toLocaleString()} 
-                {t('common.totalBalance')} 
+                {t('common.totalAddresses')} {apiData.summary.totalAddresses.toLocaleString()}
+                {t('common.totalBalance')}
                 <span className="mx-1 font-mono">
                   {satoshisToBtc(apiData.summary.totalBalance)} {BASE_SYMBOL}
                 </span>
-                —— 
-                {t('inactiveAddresses.'+apiData.summary.description)}
+                ——
+                {t('inactiveAddresses.' + apiData.summary.description)}
               </span>
             ) : (
               t('common.loadingData')
@@ -98,7 +101,9 @@ export default async function InactiveDetailPage({ params, searchParams }: Inact
             <TableHeader>
               <TableRow>
                 <TableHead>{t('inactiveAddresses.address')}</TableHead>
-                <TableHead className="text-right">{t('inactiveAddresses.balance')}（{BASE_SYMBOL}）</TableHead>
+                <TableHead className="text-right">
+                  {t('inactiveAddresses.balance')}（{BASE_SYMBOL}）
+                </TableHead>
                 <TableHead className="text-right">{t('address.lastSeen')}</TableHead>
                 <TableHead className="text-right">{t('blocks.transactions')}</TableHead>
               </TableRow>
@@ -120,7 +125,7 @@ export default async function InactiveDetailPage({ params, searchParams }: Inact
                       symbolClassName="h-5 "
                     />
                   </TableCell>
-                  <TableCell className="text-right">{formatTime(row.lastActive,t)}</TableCell>
+                  <TableCell className="text-right">{formatTime(row.lastActive, t)}</TableCell>
                   <TableCell className="text-right">{row.txCount ? row.txCount.toLocaleString() : '-'}</TableCell>
                 </TableRow>
               ))}

@@ -1,30 +1,29 @@
-import Link from 'next/link'
-import { Wallet, ArrowUpRight, ArrowDownLeft, Activity, Pickaxe } from 'lucide-react'
+import { FormattedAmount } from '@/components/formatted-amount'
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Badge } from '@/components/ui/badge'
-import { FormattedAmount } from '@/components/formatted-amount'
+import { Activity, ArrowDownLeft, ArrowUpRight, Pickaxe, Wallet } from 'lucide-react'
+import Link from 'next/link'
 
+import AddAddressTagButton from '@/components/address-add-tag-button'
+import { AddressTags } from '@/components/address-tags'
+import AddressTransactionGraphG6 from '@/components/address-transaction-graph-g6'
 import CopyButton from '@/components/copy-button'
 import { Pagination } from '@/components/pagination'
 import { getServerTranslations } from '@/i18n/server-i18n'
-import { redirect } from 'next/navigation'
-import { addressDetailApi, addressTransactionsApi } from '@/lib/http-server'
-import TransactionCard from '@/components/transaction-card'
-import { satoshisToBtc } from '@/lib/currency.utils'
 import { BASE_SYMBOL } from '@/lib/const'
+import { satoshisToBtc } from '@/lib/currency.utils'
+import { addressDetailApi, addressTransactionsApi } from '@/lib/http-server'
 import { formatTime } from '@/lib/serverUtils'
 import Decimal from 'decimal.js'
-import AddAddressTagButton from '@/components/address-add-tag-button'
-import AddressTransactionGraphG6 from '@/components/address-transaction-graph-g6'
-import { AddressTags } from '@/components/address-tags'
+import { redirect } from 'next/navigation'
 
 export default async function AddressDetailPage({
   params
 }: { params: { id: string; pageSize: string; page: string } } & { params: Promise<any> }) {
   const { t, locale } = await getServerTranslations()
 
-  const { id, pageSize: pageSizeStr, page: pageStr } = params
+  const { id, pageSize: pageSizeStr, page: pageStr } = await params
   const pageSize = parseInt(pageSizeStr)
   const currentPage = parseInt(pageStr)
   // 验证参数

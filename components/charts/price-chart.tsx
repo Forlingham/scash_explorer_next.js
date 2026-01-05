@@ -55,7 +55,7 @@ export function PriceChart({ data, currentPrice, priceChange24h }: PriceChartPro
             color: "#8B3FBF",
             fontWeight: 500,
           }}
-          formatter={(value: number) => [`$${value.toLocaleString()}`, "Price"]}
+          formatter={(value: any) => [`$${value.toLocaleString()}`, "Price"]}
         />
         <Area
           type="monotone"

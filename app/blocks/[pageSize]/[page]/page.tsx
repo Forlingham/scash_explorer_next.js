@@ -1,15 +1,15 @@
-import Link from 'next/link'
-import { Cable as Cube, Clock } from 'lucide-react'
+import { Pagination } from '@/components/pagination'
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
-import { Pagination } from '@/components/pagination'
 import { getServerTranslations } from '@/i18n/server-i18n'
-import { redirect } from 'next/navigation'
-import { blocksApi, serverHttpClient } from '@/lib/http-server'
-import { formatTime, formatHash, formatAddress } from '@/lib/serverUtils'
-import { satoshisToBtc } from '@/lib/currency.utils'
 import { BASE_SYMBOL } from '@/lib/const'
+import { satoshisToBtc } from '@/lib/currency.utils'
+import { blocksApi } from '@/lib/http-server'
+import { formatAddress, formatHash, formatTime } from '@/lib/serverUtils'
+import { Clock, Cable as Cube } from 'lucide-react'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 interface BlocksPageProps {
   params: {
@@ -22,7 +22,7 @@ export default async function BlocksPage({ params }: BlocksPageProps & { params:
   const { t } = await getServerTranslations()
 
   // 解析参数 - 在Next.js 15中需要await params
-  const { pageSize: pageSizeStr, page: pageStr } = params
+  const { pageSize: pageSizeStr, page: pageStr } = await params
   const pageSize = parseInt(pageSizeStr)
   const currentPage = parseInt(pageStr)
 
@@ -151,7 +151,11 @@ export default async function BlocksPage({ params }: BlocksPageProps & { params:
                   <div className="text-right col-span-2">{block.medianFee} sat/vB</div>
                   <div className="text-muted-foreground">{t('blocks.miner')}</div>
                   <div className="text-right font-mono break-all col-span-2">
-                    <Link href={`/address/${block.minerAddress}`} className="text-blue-600 hover:underline" title={block.minerAddress || ''}>
+                    <Link
+                      href={`/address/${block.minerAddress}`}
+                      className="text-blue-600 hover:underline"
+                      title={block.minerAddress || ''}
+                    >
                       {formatAddress(block.minerAddress || '')}
                     </Link>
                   </div>

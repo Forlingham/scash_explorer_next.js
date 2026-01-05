@@ -1,16 +1,16 @@
-import Link from 'next/link'
-import { Users, TrendingUp, TrendingDown, PieChart, Crown, Medal, Award } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
-import { getServerTranslations } from '@/i18n/server-i18n'
-import { DatePicker } from '@/components/date-picker'
-import { balanceDistributionApi, rankingDistributionApi, whaleChangesApi } from '@/lib/http-server'
-import { satoshisToBtc } from '@/lib/currency.utils'
-import { BASE_SYMBOL } from '@/lib/const'
-import { PriceChange } from '@/components/ui/price-change'
-import { PieChartComponent } from '@/components/pie-chart'
 import { AddressTags } from '@/components/address-tags'
+import { DatePicker } from '@/components/date-picker'
+import { PieChartComponent } from '@/components/pie-chart'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PriceChange } from '@/components/ui/price-change'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { getServerTranslations } from '@/i18n/server-i18n'
+import { BASE_SYMBOL } from '@/lib/const'
+import { satoshisToBtc } from '@/lib/currency.utils'
+import { balanceDistributionApi, rankingDistributionApi, whaleChangesApi } from '@/lib/http-server'
+import { Award, Crown, Medal, PieChart, Users } from 'lucide-react'
+import Link from 'next/link'
 
 interface WhaleWatcherPageProps {
   params: {
@@ -23,7 +23,7 @@ export default async function WhaleWatcherPage({ params }: WhaleWatcherPageProps
   // 获取当前日期
   const currentDate = new Date().toISOString().split('T')[0]
 
-  let { date } = params
+  let { date } = await params
   date = date || currentDate
 
   const whaleChangesApiRes = await whaleChangesApi(date === currentDate ? '' : date)
