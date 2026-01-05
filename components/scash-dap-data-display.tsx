@@ -1,6 +1,6 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileText } from 'lucide-react'
+import { checkComment } from '@/lib/filter'
 
 interface ScashDAPDataDisplayProps {
   data: string
@@ -9,6 +9,8 @@ interface ScashDAPDataDisplayProps {
 
 export function ScashDAPDataDisplay({ data, title }: ScashDAPDataDisplayProps) {
   if (!data) return null
+
+  const isClean = checkComment(data).pass
 
   return (
     <Card className="mb-8">
@@ -19,13 +21,11 @@ export function ScashDAPDataDisplay({ data, title }: ScashDAPDataDisplayProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div 
-          className="bg-muted p-4 rounded-md font-mono text-sm whitespace-pre-wrap break-all"
-          // 安全警告：scash-dap 返回的数据可能包含恶意代码，但我们将其作为文本显示
-          // 为了确保安全性，我们只显示文本内容，不进行 HTML 渲染
-        >
-          {data}
-        </div>
+        {!isClean ? (
+          <div className="text-red-500 text-sm mb-2">警告：包含敏感词</div>
+        ) : (
+          <div className="bg-muted p-4 rounded-md font-mono text-sm whitespace-pre-wrap break-all">{data}</div>
+        )}
       </CardContent>
     </Card>
   )
