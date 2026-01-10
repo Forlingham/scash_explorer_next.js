@@ -2822,10 +2822,10 @@ rw@1:
   resolved "https://registry.npmmirror.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-scash-dap@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmmirror.com/scash-dap/-/scash-dap-1.0.3.tgz#e0740a9ba0d7240e4b9850aca4114237acf9b5dc"
-  integrity sha512-slIdsxo5qhEVd3eTrERsPSZyCl31bvi4eBiejRRMtBUBdSMzxtGLU+MK+o1Ph2rLLDaYcPGSBTuPY2YxZIWuSA==
+scash-dap@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/scash-dap/-/scash-dap-1.0.4.tgz#1a40ca0c06bc1790a0398536d217efec39733d82"
+  integrity sha512-PmFg5QV5pKgnNLmn6WxeK1giDxUjJ0YOS5dPiPExBuS7YV0kyfdUTktPoKGLjd5VTypalRpbU39pZiP2Rbm2Lw==
   dependencies:
     bech32 "^2.0.0"
     bitcoinjs-lib "^7.0.0"

@@ -30,16 +30,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
 
     const confirmations = processedTransaction.confirmations
 
-    const scashDAPData = scashDAP.parseDapTransaction(
-      txData.io
-        .filter((io) => !io.amount.startsWith('-'))
-        .sort((a, b) => (a.voutIndex || 0) - (b.voutIndex || 0))
-        .map((io) => ({
-          scriptPubKey: {
-            address: io.address
-          }
-        }))
-    )
+    const scashDAPData = scashDAP.parseDapTransaction(txData.io)
 
     return (
       <div className="container mx-auto px-4 py-8">

@@ -13,7 +13,7 @@ function normalizeText(text: string): string {
 export function checkComment(content: string) {
   const filter = getMintFilter()
 
-  const cleanContent = normalizeText(content)
+  const cleanContent = normalizeText(content)  
   const isSafe = filter.verify(cleanContent)
 
   if (!isSafe) {
