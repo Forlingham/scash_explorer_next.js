@@ -120,6 +120,11 @@ interface TransactionType {
   confirmations: number
 }
 
+interface DapStatus {
+  isDap: boolean
+  isMessageDap: boolean
+}
+
 interface Sender {
   address: string
   amount: number

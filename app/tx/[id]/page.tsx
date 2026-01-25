@@ -3,97 +3,73 @@ import { ScashDAPDataDisplay } from '@/components/scash-dap-data-display'
 import TransactionCard from '@/components/transaction-card'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getServerTranslations } from '@/i18n/server-i18n'
+import { getArrFeeAddress, getScashNetwork } from '@/lib/const'
 import { transactionDetailApi } from '@/lib/http-server'
 import { formatTimeDiff } from '@/lib/serverUtils'
-import { AlertCircle, ArrowRightLeft, CheckCircle2 } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { AlertCircle, ArrowRightLeft, CheckCircle2, Database } from 'lucide-react'
 import Link from 'next/link'
 import ScashDAP from 'scash-dap'
 
-const NETWORK = {
-  messagePrefix: '\x18Scash Signed Message:\n',
-  bech32: 'scash',
-  bip32: { public: 0x0488b21e, private: 0x0488ade4 },
-  pubKeyHash: 0x3c,
-  scriptHash: 0x7d,
-  wif: 0x80
-}
+const NETWORK = getScashNetwork()
 
 export default async function TransactionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const { t } = await getServerTranslations()
   const scashDAP = new ScashDAP(NETWORK)
+  const appFeeAddress = getArrFeeAddress()
 
   try {
     const transactionDetailApiRes = await transactionDetailApi(id)
     const txData = transactionDetailApiRes.tx
     const processedTransaction = transactionDetailApiRes.processedTransaction
-
     const confirmations = processedTransaction.confirmations
+    const dapStatus = transactionDetailApiRes.dapStatus
 
-    const scashDAPData = scashDAP.parseDapTransaction(txData.io)
+    let isShowDap = false
+    let dapReceivers: TransactionType['receivers'] = []
+    let depFee = BigInt(0)
+    let networkFee = processedTransaction.fee
 
+    // 计算平台手续费
+    const appFeeTx = processedTransaction.receivers.find((item) => appFeeAddress === item.address)
+    if (appFeeTx) {
+      networkFee = appFeeTx.amount + networkFee
+    }
+    processedTransaction.receivers = processedTransaction.receivers.filter((item) => item.address !== appFeeAddress)
+
+    let scashDAPData: string | null = null
+    if (dapStatus.isDap) {
+      if (dapStatus.isMessageDap === false) {
+        isShowDap = true
+      }
+      scashDAPData = scashDAP.parseDapTransaction(txData.io)
+      dapReceivers = processedTransaction.receivers.filter((item) => {
+        return scashDAP.isScashDAPAddress(item.address)
+      })
+      depFee = dapReceivers.reduce((acc, cur) => acc + BigInt(cur.amount), BigInt(0))
+
+      if (dapReceivers) {
+        processedTransaction.receivers = processedTransaction.receivers.filter((item) => {
+          return !dapReceivers.some((dapItem) => dapItem.address === item.address)
+        })
+      }
+    }
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
             <ArrowRightLeft className="h-8 w-8 text-primary" />
             {t('tx.title')}
+            {dapStatus.isDap && (
+              <Badge className="ml-2 bg-gradient-to-r from-[#8B3FBF] to-[#A855F7] text-white border-0 gap-1 px-3 py-1 text-sm font-medium shadow-md hover:from-[#9d4ed6] hover:to-[#b566ff]">
+                <Database className="h-3.5 w-3.5" />
+                DAP Data
+              </Badge>
+            )}
           </h1>
           <p className="text-sm text-muted-foreground font-mono break-all mt-2">{txData.txid}</p>
         </div>
-
-        {/* Overview Cards */}
-        {/* <div className="grid gap-6 md:grid-cols-4 mb-8">
-        <Card className="border-primary/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Coins className="h-4 w-4" />
-              {t('tx.totalInput')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{txData.totalInput.toFixed(8)} BTC</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-primary/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Coins className="h-4 w-4" />
-              {t('tx.totalOutput')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{txData.totalOutput.toFixed(8)} BTC</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-primary/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Hash className="h-4 w-4" />
-              {t('tx.fee')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-warning">{txData.fee.toFixed(8)} BTC</div>
-            <div className="text-sm text-muted-foreground">{txData.feeRate.toFixed(2)} sat/vB</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-primary/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              {t('tx.size')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{txData.size} bytes</div>
-            <div className="text-sm text-muted-foreground">{txData.virtualSize} vBytes</div>
-          </CardContent>
-        </Card>
-      </div> */}
 
         {/* Transaction Details */}
         <Card className="mb-8">
@@ -141,22 +117,33 @@ export default async function TransactionDetailPage({ params }: { params: Promis
             </div>
           </CardContent>
         </Card>
-        {/* Transaction Flow Visualization */}
-        <TransactionFlowVisualization
-          inputs={processedTransaction.senders}
-          outputs={[...processedTransaction.receivers, ...processedTransaction.changeOutputs]}
-          flowTitle={t('tx.flow')}
-          hideDiagramText={t('tx.hideDiagram')}
-          showDiagramText={t('tx.showDiagram')}
-          outputLabel={t('tx.output')}
-        />
+        {!isShowDap && (
+          <>
+            {/* Transaction Flow Visualization */}
+            <TransactionFlowVisualization
+              inputs={processedTransaction.senders}
+              outputs={[...processedTransaction.receivers, ...processedTransaction.changeOutputs]}
+              flowTitle={t('tx.flow')}
+              hideDiagramText={t('tx.hideDiagram')}
+              showDiagramText={t('tx.showDiagram')}
+              outputLabel={t('tx.output')}
+            />
 
-        {/* Transaction Card */}
-        <div className="mb-8">
-          <TransactionCard tx={processedTransaction} t={t} isTx={true} />
-        </div>
-
-        <ScashDAPDataDisplay data={scashDAPData} title={t('tx.scashDAPData')} />
+            {/* Transaction Card */}
+            <div className="mb-8">
+              <TransactionCard tx={processedTransaction} t={t} isTx={true} />
+            </div>
+          </>
+        )}
+        {isShowDap && scashDAPData && (
+          <ScashDAPDataDisplay
+            data={scashDAPData}
+            dapReceivers={dapReceivers}
+            depFee={depFee}
+            networkFee={networkFee}
+            title={t('tx.scashDAPData')}
+          />
+        )}
       </div>
     )
   } catch (error) {

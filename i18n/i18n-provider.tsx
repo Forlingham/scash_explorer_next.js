@@ -143,6 +143,22 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.mining': 'Mining',
     'address.fee': 'Fee',
 
+    //dap
+    'dap.fee': 'DAP Fee',
+    'dap.networkFee': 'Network Fee',
+    'dap.warning': 'Warning: Contains sensitive words',
+    'dap.warningDesc': 'If you really need to view content containing sensitive words, please download the Scash-DAP client to view it.',
+    'dap.clientDesc': 'The Scash-DAP client is a standalone application for viewing and publishing information to the Scash network.',
+    'dap.downloadLink': 'Download link:',
+    'dap.githubReleases': 'GitHub Releases',
+    'dap.copiedToClipboard': 'Copied to clipboard',
+    'dap.clipboardDesc': 'The raw data has been copied to your clipboard.',
+    'dap.downloadStarted': 'Download started',
+    'dap.downloadDesc': 'Downloading JSON file.',
+    'dap.viewRawData': 'View raw data',
+    'dap.rawData': 'Raw data',
+    'dap.rawDataDesc': 'Raw transaction output data associated with this DAP record.',
+
     // Block
     'block.title': 'Block Details',
     'block.height': 'Height',
@@ -461,6 +477,21 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.mining': '挖矿',
     'address.fee': '手续费',
 
+    //dap
+    'dap.fee': 'DAP手续费',
+    'dap.networkFee': '网络手续费',
+    'dap.warning': '警告：包含敏感词',
+    'dap.warningDesc': '如果你确实需要查看包含敏感词的内容，请下载 Scash-DAP 客户端查看。',
+    'dap.clientDesc': 'Scash-DAP 客户端是一个独立的应用程序，用于查看和发布信息到 Scash 网络上工具。',
+    'dap.downloadLink': '下载地址：',
+    'dap.githubReleases': 'GitHub Releases',
+    'dap.copiedToClipboard': '已复制到剪贴板',
+    'dap.clipboardDesc': '原始数据已复制到剪贴板。',
+    'dap.downloadStarted': '下载已开始',
+    'dap.downloadDesc': '正在下载JSON文件。',
+    'dap.viewRawData': '查看原始数据',
+    'dap.rawData': '原始数据',
+    'dap.rawDataDesc': '与此 DAP 记录关联的原始交易输出数据。',
     // Block
     'block.title': '区块详情',
     'block.height': '高度',
@@ -781,6 +812,22 @@ const translations: Record<Locale, Record<string, string>> = {
     'address.selfTransfer': 'Самоперевод',
     'address.mining': 'Майнинг',
     'address.fee': 'Комиссия',
+
+    //dap
+    'dap.fee': 'DAP комиссия',
+    'dap.networkFee': 'Сеть комиссия',
+    'dap.warning': 'Предупреждение: содержит чувствительные слова',
+    'dap.warningDesc': 'Если вам действительно нужно просмотреть контент с чувствительными словами, пожалуйста, скачайте клиент Scash-DAP.',
+    'dap.clientDesc': 'Клиент Scash-DAP — это отдельное приложение для просмотра и публикации информации в сети Scash.',
+    'dap.downloadLink': 'Ссылка для скачивания:',
+    'dap.githubReleases': 'GitHub Releases',
+    'dap.copiedToClipboard': 'Скопировано в буфер обмена',
+    'dap.clipboardDesc': 'Сырые данные были скопированы в буфер обмена.',
+    'dap.downloadStarted': 'Скачивание начато',
+    'dap.downloadDesc': 'Скачивается JSON-файл.',
+    'dap.viewRawData': 'Просмотреть сырые данные',
+    'dap.rawData': 'Сырые данные',
+    'dap.rawDataDesc': 'Сырые данные выходов транзакций, связанные с этой записью DAP.',
 
     // Block
     'block.title': 'Детали блока',
