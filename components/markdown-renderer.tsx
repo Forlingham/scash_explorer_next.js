@@ -67,38 +67,38 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
 
   return (
     <>
-      <div className={`markdown-body ${className}`}>
+      <div className={`${className || ''}`}>
         <ReactMarkdown
           rehypePlugins={[[rehypeSanitize, sanitizeSchema]]}
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ node, ...props }) => <h1 {...props} className="text-xl font-bold  mt-4 mb-2 border-b border-gray-700 pb-1" />,
-            h2: ({ node, ...props }) => <h2 {...props} className="text-lg font-bold  mt-3 mb-2" />,
-            h3: ({ node, ...props }) => <h3 {...props} className="text-base font-bold  mt-3 mb-1" />,
-            h4: ({ node, ...props }) => <h4 {...props} className="text-sm font-bold  mt-2 mb-1" />,
-            h5: ({ node, ...props }) => <h5 {...props} className="text-sm font-bold  mt-2 mb-1" />,
-            h6: ({ node, ...props }) => <h6 {...props} className="text-xs font-bold  mt-2 mb-1" />,
+            h1: ({ node, ...props }) => <h1 {...props} className="text-xl font-bold  mt-4 mb-2 border-b border-border pb-1 text-foreground" />,
+            h2: ({ node, ...props }) => <h2 {...props} className="text-lg font-bold  mt-3 mb-2 text-foreground" />,
+            h3: ({ node, ...props }) => <h3 {...props} className="text-base font-bold  mt-3 mb-1 text-foreground" />,
+            h4: ({ node, ...props }) => <h4 {...props} className="text-sm font-bold  mt-2 mb-1 text-foreground" />,
+            h5: ({ node, ...props }) => <h5 {...props} className="text-sm font-bold  mt-2 mb-1 text-foreground" />,
+            h6: ({ node, ...props }) => <h6 {...props} className="text-xs font-bold  mt-2 mb-1 text-foreground" />,
             table: ({ node, ...props }) => (
-              <div className="overflow-x-auto my-4 rounded-lg border border-gray-700">
-                <table {...props} className="w-full text-left text-sm text-gray-300" />
+              <div className="overflow-x-auto my-4 rounded-lg border border-border">
+                <table {...props} className="w-full text-left text-sm text-muted-foreground" />
               </div>
             ),
-            thead: ({ node, ...props }) => <thead {...props} className="bg-gray-800 text-gray-200" />,
-            tbody: ({ node, ...props }) => <tbody {...props} className="divide-y divide-gray-700 bg-gray-900/50" />,
-            tr: ({ node, ...props }) => <tr {...props} className="hover:bg-gray-800/50 transition-colors" />,
+            thead: ({ node, ...props }) => <thead {...props} className="bg-muted text-muted-foreground" />,
+            tbody: ({ node, ...props }) => <tbody {...props} className="divide-y divide-border bg-muted/50" />,
+            tr: ({ node, ...props }) => <tr {...props} className="hover:bg-muted/80 transition-colors" />,
             th: ({ node, ...props }) => <th {...props} className="px-4 py-3 font-semibold whitespace-nowrap" />,
             td: ({ node, ...props }) => <td {...props} className="px-4 py-3" />,
-            hr: ({ node, ...props }) => <hr {...props} className="my-4 border-gray-700" />,
-            strong: ({ node, ...props }) => <strong {...props} className="font-bold " />,
-            em: ({ node, ...props }) => <em {...props} className="italic text-gray-400" />,
-            del: ({ node, ...props }) => <del {...props} className="line-through text-gray-500" />,
-            p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0 leading-relaxed" />,
-            ul: ({ node, ...props }) => <ul {...props} className="list-disc list-inside mb-2 pl-1 space-y-1" />,
-            ol: ({ node, ...props }) => <ol {...props} className="list-decimal list-inside mb-2 pl-1 space-y-1" />,
+            hr: ({ node, ...props }) => <hr {...props} className="my-4 border-border" />,
+            strong: ({ node, ...props }) => <strong {...props} className="font-bold text-foreground" />,
+            em: ({ node, ...props }) => <em {...props} className="italic text-muted-foreground" />,
+            del: ({ node, ...props }) => <del {...props} className="line-through text-muted-foreground" />,
+            p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0 leading-relaxed text-muted-foreground" />,
+            ul: ({ node, ...props }) => <ul {...props} className="list-disc list-inside mb-2 pl-1 space-y-1 text-muted-foreground" />,
+            ol: ({ node, ...props }) => <ol {...props} className="list-decimal list-inside mb-2 pl-1 space-y-1 text-muted-foreground" />,
             blockquote: ({ node, ...props }) => (
               <blockquote
                 {...props}
-                className="border-l-4 border-purple-500/50 pl-4 py-1 italic bg-gray-800/30 rounded-r my-2 text-gray-400"
+                className="border-l-4 border-primary/50 pl-4 py-1 italic bg-muted/30 rounded-r my-2 text-muted-foreground"
               />
             ),
 
@@ -107,7 +107,7 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
               <a
                 {...props}
                 href={href}
-                className="text-purple-400 hover: hover:underline break-all cursor-pointer transition-colors"
+                className="text-primary hover:text-primary/80 hover:underline break-all cursor-pointer transition-colors"
                 onClick={(e) => {
                   e.preventDefault()
                   if (href) handleLinkClick(href)
@@ -123,7 +123,7 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
               if (isInline) {
                 return (
                   <code
-                    className="bg-gray-800/10 rounded px-1.5 py-0.5 font-mono text-xs border border-gray-800/30"
+                    className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-xs border border-border"
                     {...props}
                   >
                     {children}
@@ -134,7 +134,7 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
               return (
                 <div className="relative group">
                   <code
-                    className="block bg-gray-900 border border-gray-700 rounded-lg p-3 font-mono text-xs text-gray-300 overflow-x-auto my-2 shadow-inner"
+                    className="block bg-muted border border-border rounded-lg p-3 font-mono text-xs text-muted-foreground overflow-x-auto my-2 shadow-inner"
                     {...props}
                   >
                     {children}
@@ -155,7 +155,7 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
                 alt={alt || 'Blockchain content'}
                 loading="lazy"
                 referrerPolicy="no-referrer" // 关键：保护用户隐私，不发送 Referer
-                className="max-w-full h-auto rounded-lg border border-gray-700 my-2 max-h-[500px] object-contain bg-black/20"
+                className="max-w-full h-auto rounded-lg border border-border my-2 max-h-[500px] object-contain bg-muted"
                 onError={(e) => {
                   // 可选：图片加载失败时的占位符逻辑
                   e.currentTarget.style.display = 'none'
@@ -169,24 +169,24 @@ export function MarkdownRenderer({ children, className }: MarkdownRendererProps)
       </div>
 
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-        <AlertDialogContent className="bg-gray-800 border-gray-700 max-w-[90vw] w-full sm:max-w-lg rounded-xl shadow-2xl shadow-black/50">
+        <AlertDialogContent className="bg-background border-border max-w-[90vw] w-full sm:max-w-lg rounded-xl shadow-2xl">
           {/* ... 保持你原有的 AlertDialog 内容 ... */}
           <AlertDialogHeader>
-            <AlertDialogTitle className="">{t('common.externalLink')}</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-300">
+            <AlertDialogTitle className="text-foreground">{t('common.externalLink')}</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
               {t('common.externalLinkInfo')}
-              <div className="mt-4 p-3 bg-black/30 rounded-lg border border-gray-700/50 break-all text-purple-400 font-mono text-xs max-h-24 overflow-y-auto">
+              <div className="mt-4 p-3 bg-muted rounded-lg border border-border break-all text-primary font-mono text-xs max-h-24 overflow-y-auto">
                 {targetUrl}
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row gap-3 sm:gap-0 mt-4">
-            <AlertDialogCancel className="flex-1 bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 hover: mt-0 transition-colors">
+            <AlertDialogCancel className="flex-1 bg-muted border-border text-muted-foreground hover:bg-muted/80 hover:text-foreground mt-0 transition-colors">
               {t('common.cancel')}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirm}
-              className="flex-1 bg-purple-600 hover:bg-purple-700  border-0 transition-colors"
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground border-0 transition-colors"
             >
               {t('common.continue')}
             </AlertDialogAction>

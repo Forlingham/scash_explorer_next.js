@@ -8,6 +8,7 @@ import { getServerTranslations } from '@/i18n/server-i18n'
 import { satoshisToBtc } from '@/lib/currency.utils'
 import { Badge } from '@/components/ui/badge'
 import { BASE_SYMBOL } from '@/lib/const'
+import { DapMessageDisplay } from './dap-message-display'
 
 interface ScashDAPDataDisplayProps {
   data: string
@@ -15,9 +16,17 @@ interface ScashDAPDataDisplayProps {
   dapReceivers?: any[]
   depFee?: bigint
   networkFee?: number
+  isShowMessageDisplay?: boolean
 }
 
-export async function ScashDAPDataDisplay({ data, title, dapReceivers, depFee, networkFee }: ScashDAPDataDisplayProps) {
+export async function ScashDAPDataDisplay({
+  data,
+  title,
+  dapReceivers,
+  depFee,
+  networkFee,
+  isShowMessageDisplay = false
+}: ScashDAPDataDisplayProps) {
   if (!data) return null
   const { t } = await getServerTranslations()
 
@@ -36,10 +45,10 @@ export async function ScashDAPDataDisplay({ data, title, dapReceivers, depFee, n
             {(depFee !== undefined || networkFee !== undefined) && (
               <div className="flex items-center gap-2">
                 {depFee !== undefined && depFee > BigInt(0) && (
-                  <Badge variant="secondary" className="gap-1.5 py-1">
-                    <Coins className="h-3.5 w-3.5 text-muted-foreground" />
-                    <span className="text-muted-foreground">{t('dap.fee')}:</span>
-                    <span className="font-mono font-medium">
+                  <Badge variant="outline" className="gap-1.5 py-1 bg-primary/10 border-primary/20 hover:bg-primary/20">
+                    <Coins className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-primary">{t('dap.fee')}:</span>
+                    <span className="font-mono font-medium text-primary">
                       {satoshisToBtc(depFee)} {BASE_SYMBOL}
                     </span>
                   </Badge>
@@ -83,6 +92,8 @@ export async function ScashDAPDataDisplay({ data, title, dapReceivers, depFee, n
               </div>
             </AlertDescription>
           </Alert>
+        ) : isShowMessageDisplay ? (
+          <DapMessageDisplay content={data} />
         ) : (
           <MarkdownRenderer>{data}</MarkdownRenderer>
         )}

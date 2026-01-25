@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Maximize2, X, Eye } from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from '@/components/ui/dialog'
 import { MarkdownRenderer } from '@/components/markdown-renderer'
 import { Button } from '@/components/ui/button'
 
@@ -72,59 +72,54 @@ function isMarkdown(text: string): boolean {
 }
 
 export function DapMessageDisplay({ content, showPreview = true, buttonText, title, className }: DapMessageDisplayProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
   const isMd = isMarkdown(content)
-  const isLong = content.length > 100
+  const isLong = content.length > 300
   const isInteractive = isMd || isLong
 
   if (showPreview && !isInteractive) {
     return (
-      <div className={`rounded-lg border border-transparent bg-gray-900/50 p-3 ${className || ''}`}>
-        <div className="text-sm text-gray-300 break-all whitespace-pre-wrap">{content}</div>
+      <div className={`rounded-lg border border-transparent bg-muted/50 p-3 ${className || ''}`}>
+        <div className="text-sm text-muted-foreground break-all whitespace-pre-wrap">{content}</div>
       </div>
     )
   }
 
   // Generate preview text if showing preview
   const previewText = showPreview ? stripMarkdown(content) : ''
-  const displayPreview = showPreview ? (previewText.length > 100 ? previewText.slice(0, 100) + '...' : previewText) : ''
+  const displayPreview = showPreview ? (previewText.length > 300 ? previewText.slice(0, 300) + '...' : previewText) : ''
 
   return (
-    <>
-      <div
-        className={`group relative cursor-pointer rounded-lg border border-transparent bg-gray-900/50 p-3 hover:bg-gray-800 hover:border-purple-500/30 transition-all duration-200 ${className || ''}`}
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsOpen(true)
-        }}
-      >
-        <div className="text-sm text-gray-300 break-all line-clamp-3">
-          {displayPreview || <span className="text-gray-500 italic">{'dap.clickToView'}</span>}
-        </div>
-
-        <div className="mt-2 flex items-center gap-1 text-xs text-purple-400 opacity-70 group-hover:opacity-100 transition-opacity">
-          <Maximize2 className="h-3 w-3" />
-          <span>{buttonText}</span>
-        </div>
-      </div>
-
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-[95vw] w-full h-[90vh] sm:h-[80vh] flex flex-col p-0 gap-0 bg-gray-950 border-gray-800 overflow-hidden">
-          <DialogHeader className="px-4 py-3 border-b border-gray-800 flex flex-row items-center justify-between bg-gray-900/50">
-            <DialogTitle className="text-base font-medium text-gray-200">{title}</DialogTitle>
-            <DialogClose className="text-gray-400 hover:text-white transition-colors focus:outline-hidden">
-              <X className="h-5 w-5" />
-            </DialogClose>
-          </DialogHeader>
-
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-            <div className="prose prose-invert max-w-none prose-sm sm:prose-base">
-              <MarkdownRenderer>{content}</MarkdownRenderer>
-            </div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          className={`w-full text-left group relative cursor-pointer rounded-lg border border-transparent bg-muted/50 p-3 hover:bg-muted hover:border-primary/50 transition-all duration-200 ${className || ''}`}
+        >
+          <div className="text-sm text-muted-foreground break-all line-clamp-3">
+            {displayPreview || <span className="text-muted-foreground/70 italic">{'dap.clickToView'}</span>}
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+
+          <div className="mt-2 flex items-center gap-1 text-xs text-primary opacity-70 group-hover:opacity-100 transition-opacity">
+            <Maximize2 className="h-3 w-3" />
+            <span>{buttonText}</span>
+          </div>
+        </button>
+      </DialogTrigger>
+
+      <DialogContent showCloseButton={false} className="max-w-[95vw] w-[95vw] sm:w-fit sm:max-w-4xl h-[80vh] flex flex-col p-0 gap-0 bg-background border-border overflow-hidden">
+        <DialogHeader className="px-4 py-3 border-b border-border flex flex-row items-center justify-between bg-muted/30 shrink-0">
+          <DialogTitle className="text-base font-medium text-foreground mr-8 truncate max-w-[calc(100%-3rem)]">{title}</DialogTitle>
+          <DialogClose className="text-muted-foreground hover:text-foreground transition-colors focus:outline-hidden">
+            <X className="h-5 w-5" />
+          </DialogClose>
+        </DialogHeader>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 min-w-[300px]">
+          <div className="max-w-none">
+            <MarkdownRenderer>{content}</MarkdownRenderer>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

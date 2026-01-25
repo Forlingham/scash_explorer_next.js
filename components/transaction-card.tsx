@@ -7,6 +7,7 @@ import { satoshisToBtc } from '@/lib/currency.utils'
 import { BASE_SYMBOL, getScashNetwork } from '@/lib/const'
 import { mergeSendersReceivers } from '@/lib/utils'
 import { DapUtils } from '@/lib/dapUtils'
+import { ScashDAPDataDisplay } from './scash-dap-data-display'
 
 // 地址方块组件
 function AddressBlock({
@@ -338,6 +339,16 @@ export default function TransactionCard({ dapStatus, txData, tx, t, highlightAdd
             )}
           </div>
         </div>
+        {dapStatus.isDap && scashDAPData && (
+          <ScashDAPDataDisplay
+            data={scashDAPData}
+            dapReceivers={dapReceivers}
+            depFee={depFee}
+            networkFee={networkFee}
+            title={t('tx.scashDAPData')}
+            isShowMessageDisplay={true}
+          />
+        )}
       </CardContent>
     </Card>
   )
