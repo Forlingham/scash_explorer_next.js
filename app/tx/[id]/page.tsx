@@ -9,15 +9,12 @@ import { formatTimeDiff } from '@/lib/serverUtils'
 import { Badge } from '@/components/ui/badge'
 import { AlertCircle, ArrowRightLeft, CheckCircle2, Database } from 'lucide-react'
 import Link from 'next/link'
-import ScashDAP from 'scash-dap'
-
-const NETWORK = getScashNetwork()
+import { DapUtils } from '@/lib/dapUtils'
 
 export default async function TransactionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const { t } = await getServerTranslations()
-  const scashDAP = new ScashDAP(NETWORK)
-  const appFeeAddress = getArrFeeAddress()
+  const dapUtils = new DapUtils()
 
   try {
     const transactionDetailApiRes = await transactionDetailApi(id)
@@ -26,35 +23,12 @@ export default async function TransactionDetailPage({ params }: { params: Promis
     const confirmations = processedTransaction.confirmations
     const dapStatus = transactionDetailApiRes.dapStatus
 
-    let isShowDap = false
-    let dapReceivers: TransactionType['receivers'] = []
-    let depFee = BigInt(0)
-    let networkFee = processedTransaction.fee
+    const { isShowDap, dapReceivers, depFee, networkFee, scashDAPData } = await dapUtils.parseContent(
+      dapStatus,
+      processedTransaction,
+      txData
+    )
 
-    // 计算平台手续费
-    const appFeeTx = processedTransaction.receivers.find((item) => appFeeAddress === item.address)
-    if (appFeeTx) {
-      networkFee = appFeeTx.amount + networkFee
-    }
-    processedTransaction.receivers = processedTransaction.receivers.filter((item) => item.address !== appFeeAddress)
-
-    let scashDAPData: string | null = null
-    if (dapStatus.isDap) {
-      if (dapStatus.isMessageDap === false) {
-        isShowDap = true
-      }
-      scashDAPData = scashDAP.parseDapTransaction(txData.io)
-      dapReceivers = processedTransaction.receivers.filter((item) => {
-        return scashDAP.isScashDAPAddress(item.address)
-      })
-      depFee = dapReceivers.reduce((acc, cur) => acc + BigInt(cur.amount), BigInt(0))
-
-      if (dapReceivers) {
-        processedTransaction.receivers = processedTransaction.receivers.filter((item) => {
-          return !dapReceivers.some((dapItem) => dapItem.address === item.address)
-        })
-      }
-    }
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
@@ -131,7 +105,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
 
             {/* Transaction Card */}
             <div className="mb-8">
-              <TransactionCard tx={processedTransaction} t={t} isTx={true} />
+              <TransactionCard dapStatus={dapStatus} txData={txData} tx={processedTransaction} t={t} isTx={true} />
             </div>
           </>
         )}

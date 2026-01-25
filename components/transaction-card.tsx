@@ -4,8 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { formatTime } from '@/lib/serverUtils'
 import { satoshisToBtc } from '@/lib/currency.utils'
-import { BASE_SYMBOL } from '@/lib/const'
+import { BASE_SYMBOL, getScashNetwork } from '@/lib/const'
 import { mergeSendersReceivers } from '@/lib/utils'
+import { DapUtils } from '@/lib/dapUtils'
 
 // 地址方块组件
 function AddressBlock({
@@ -22,10 +23,10 @@ function AddressBlock({
   const bgColor = isHighlighted
     ? 'bg-gray-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700'
     : type === 'input'
-    ? 'bg-red-100 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-    : type === 'change'
-    ? 'bg-orange-100 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'
-    : 'bg-green-100 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+      ? 'bg-red-100 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+      : type === 'change'
+        ? 'bg-orange-100 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'
+        : 'bg-green-100 dark:bg-green-900/20 border-green-200 dark:border-green-800'
 
   // 使用条件渲染来避免类型错误
   return isHighlighted ? (
@@ -66,6 +67,8 @@ function AddressBlock({
 }
 
 interface TransactionCardProps {
+  dapStatus: DapStatus
+  txData: TxDetailType
   tx: {
     txid: string
     blockHeight: number
@@ -90,9 +93,15 @@ interface TransactionCardProps {
   isTx?: boolean // 是否已确认交易
 }
 
-export default function TransactionCard({ tx, t, highlightAddress, isTx = false }: TransactionCardProps) {
-  const { mergedSenders, mergedReceivers } = mergeSendersReceivers(tx.senders, tx.receivers)
+export default function TransactionCard({ dapStatus, txData, tx, t, highlightAddress, isTx = false }: TransactionCardProps) {
+  const dapUtils = new DapUtils()
+  const { isShowDap, dapReceivers, depFee, networkFee, scashDAPData, totalAmount, processedTransaction } = dapUtils.parseContent(
+    dapStatus,
+    tx,
+    txData
+  )
 
+  const { mergedSenders, mergedReceivers } = mergeSendersReceivers(processedTransaction.senders, processedTransaction.receivers)
   return (
     <Card key={tx.txid} className="overflow-hidden">
       {/* 交易ID头部 */}
@@ -116,15 +125,23 @@ export default function TransactionCard({ tx, t, highlightAddress, isTx = false 
               <div className="flex flex-col">
                 <span className="text-muted-foreground text-xs">{t('tx.totalAmount')}</span>
                 <span className="font-semibold text-sm">
-                  {satoshisToBtc(tx.totalAmount)} {BASE_SYMBOL}
+                  {satoshisToBtc(totalAmount)} {BASE_SYMBOL}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-muted-foreground text-xs">{t('tx.fee')}</span>
                 <span className="font-semibold text-sm">
-                  {satoshisToBtc(tx.fee)} {BASE_SYMBOL}
+                  {satoshisToBtc(networkFee)} {BASE_SYMBOL}
                 </span>
               </div>
+              {dapStatus.isDap && (
+                <div className="flex flex-col">
+                  <span className="text-muted-foreground text-xs">{t('dap.fee')}</span>
+                  <span className="font-semibold text-sm">
+                    {satoshisToBtc(depFee)} {BASE_SYMBOL}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
@@ -229,9 +246,9 @@ export default function TransactionCard({ tx, t, highlightAddress, isTx = false 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm font-medium text-green-600 dark:text-green-400">
               <ArrowUp className="h-4 w-4" />
-              {t('tx.outputs')} ({mergedReceivers.length + tx.changeOutputs.length})
+              {t('tx.outputs')} ({mergedReceivers.length + processedTransaction.changeOutputs.length})
             </div>
-            {mergedReceivers.length + tx.changeOutputs.length <= 3 ? (
+            {mergedReceivers.length + processedTransaction.changeOutputs.length <= 3 ? (
               <div className="space-y-1">
                 {mergedReceivers.map((receiver, index) => {
                   const isHighlighted = highlightAddress && receiver.address === highlightAddress
@@ -264,7 +281,7 @@ export default function TransactionCard({ tx, t, highlightAddress, isTx = false 
                     </div>
                   )
                 })}
-                {tx.changeOutputs.map((change, index) => {
+                {processedTransaction.changeOutputs.map((change, index) => {
                   const isHighlighted = highlightAddress && change.address === highlightAddress
                   return (
                     <div
@@ -308,7 +325,7 @@ export default function TransactionCard({ tx, t, highlightAddress, isTx = false 
                     isHighlighted={highlightAddress === receiver.address}
                   />
                 ))}
-                {tx.changeOutputs.map((change, index) => (
+                {processedTransaction.changeOutputs.map((change, index) => (
                   <AddressBlock
                     key={`change-${index}`}
                     address={change.address}

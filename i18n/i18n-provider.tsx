@@ -236,6 +236,11 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.poolTransaction': 'Mempool Transaction',
     'tx.poolTransactionDesc': 'Transaction pending confirmation',
     'tx.scashDAPData': 'Scash DAP Data',
+    'tx.flow': 'Transaction Flow',
+    'tx.hideDiagram': 'Hide Transaction Flow Diagram',
+    'tx.showDiagram': 'Show Transaction Flow Diagram',
+    'tx.outputDesc': 'Transaction Outputs (Destinations)',
+
     'address.lastSeen': 'Last Seen',
     'address.firstSeen': 'First Seen',
 
@@ -569,6 +574,10 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.poolTransaction': '内存池交易',
     'tx.poolTransactionDesc': '正在被打包的交易',
     'tx.scashDAPData': 'Scash DAP 数据',
+    'tx.flow': '交易流程',
+    'tx.hideDiagram': '隐藏交易流程图',
+    'tx.showDiagram': '显示交易流程图',
+    'tx.outputDesc': '交易输出（目的地）',
 
     'address.lastSeen': '最后活跃时间',
     'address.firstSeen': '首次活跃时间',
@@ -906,6 +915,11 @@ const translations: Record<Locale, Record<string, string>> = {
     'tx.poolTransaction': 'Транзакция в мемпуле',
     'tx.poolTransactionDesc': 'Транзакция ожидает включения в блок',
     'tx.scashDAPData': 'Данные Scash DAP',
+    'tx.flow': 'Поток транзакции',
+    'tx.hideDiagram': 'Скрыть схему потока транзакции',
+    'tx.showDiagram': 'Показать схему потока транзакции',
+    'tx.outputDesc': 'Выходы транзакции (назначения)',
+
     'address.lastSeen': 'Последняя активность',
     'address.firstSeen': 'Первая активность',
 
