@@ -32,6 +32,49 @@ export async function ScashDAPDataDisplay({
 
   const isClean = checkComment(data).pass
 
+  const alertContent = (
+    <Alert variant="destructive">
+      <AlertTriangle className="h-4 w-4" />
+      <AlertTitle>{t('dap.warning')}</AlertTitle>
+      <AlertDescription>
+        <div className="mt-2 space-y-2">
+          <p>{t('dap.warningDesc')}</p>
+          <p>{t('dap.clientDesc')}</p>
+          <p>
+            {t('dap.downloadLink')}{' '}
+            <a
+              href="https://github.com/Forlingham/ScashDataAddressProtocol/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              {t('dap.githubReleases')}
+            </a>
+          </p>
+        </div>
+      </AlertDescription>
+    </Alert>
+  )
+
+  if (isShowMessageDisplay) {
+    return (
+      <div className="mt-3 border-t pt-3">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <div className="flex items-center gap-2">
+            <FileText className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium text-muted-foreground">{title}</span>
+          </div>
+          {dapReceivers && dapReceivers.length > 0 && (
+            <div className="scale-90 origin-right">
+              <ScashDAPRawDataViewer dapReceivers={dapReceivers} />
+            </div>
+          )}
+        </div>
+        {!isClean ? alertContent : <DapMessageDisplay content={data} />}
+      </div>
+    )
+  }
+
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -40,7 +83,6 @@ export async function ScashDAPDataDisplay({
             <FileText className="h-5 w-5 text-primary" />
             {title}
           </CardTitle>
-
           <div className="flex flex-wrap items-center gap-3">
             {(depFee !== undefined || networkFee !== undefined) && (
               <div className="flex items-center gap-2">
@@ -69,35 +111,7 @@ export async function ScashDAPDataDisplay({
           </div>
         </div>
       </CardHeader>
-      <CardContent>
-        {!isClean ? (
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>{t('dap.warning')}</AlertTitle>
-            <AlertDescription>
-              <div className="mt-2 space-y-2">
-                <p>{t('dap.warningDesc')}</p>
-                <p>{t('dap.clientDesc')}</p>
-                <p>
-                  {t('dap.downloadLink')}{' '}
-                  <a
-                    href="https://github.com/Forlingham/ScashDataAddressProtocol/releases"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium underline underline-offset-4"
-                  >
-                    {t('dap.githubReleases')}
-                  </a>
-                </p>
-              </div>
-            </AlertDescription>
-          </Alert>
-        ) : isShowMessageDisplay ? (
-          <DapMessageDisplay content={data} />
-        ) : (
-          <MarkdownRenderer>{data}</MarkdownRenderer>
-        )}
-      </CardContent>
+      <CardContent>{!isClean ? alertContent : <MarkdownRenderer>{data}</MarkdownRenderer>}</CardContent>
     </Card>
   )
 }

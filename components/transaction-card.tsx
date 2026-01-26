@@ -345,7 +345,7 @@ export default function TransactionCard({ dapStatus, txData, tx, t, highlightAdd
             dapReceivers={dapReceivers}
             depFee={depFee}
             networkFee={networkFee}
-            title={t('tx.scashDAPData')}
+            title={t('dap.transferMessage')}
             isShowMessageDisplay={true}
           />
         )}

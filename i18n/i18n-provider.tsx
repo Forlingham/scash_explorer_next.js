@@ -158,6 +158,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.viewRawData': 'View raw data',
     'dap.rawData': 'Raw data',
     'dap.rawDataDesc': 'Raw transaction output data associated with this DAP record.',
+    'dap.transferMessage': 'Transfer Message',
 
     // Block
     'block.title': 'Block Details',
@@ -497,6 +498,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.viewRawData': '查看原始数据',
     'dap.rawData': '原始数据',
     'dap.rawDataDesc': '与此 DAP 记录关联的原始交易输出数据。',
+    'dap.transferMessage': '转账留言',
     // Block
     'block.title': '区块详情',
     'block.height': '高度',
@@ -837,6 +839,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.viewRawData': 'Просмотреть сырые данные',
     'dap.rawData': 'Сырые данные',
     'dap.rawDataDesc': 'Сырые данные выходов транзакций, связанные с этой записью DAP.',
+    'dap.transferMessage': 'Сообщение перевода',
 
     // Block
     'block.title': 'Детали блока',
