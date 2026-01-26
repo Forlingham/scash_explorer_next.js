@@ -166,10 +166,7 @@ export function addressTransactionsApi(id: string, pageSize: number, currentPage
  * @returns 交易详情
  */
 export function transactionDetailApi(id: string) {
-  return serverHttpClient.get<{ tx: TxDetailType } & { processedTransaction: TransactionType } & { dapStatus: DapStatus }>(
-    `/explorer/tx/${id}`,
-    {}
-  )
+  return serverHttpClient.get<{ tx: TxDetailType } & { processedTransaction: TransactionType }>(`/explorer/tx/${id}`, {})
 }
 
 /**

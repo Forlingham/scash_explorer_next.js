@@ -14,7 +14,7 @@ interface TransactionsPageProps {
 
 export default async function TransactionsPage({ params }: TransactionsPageProps & { params: Promise<any> }) {
   const { t } = await getServerTranslations()
-  
+
   // 解析参数 - 在Next.js 15中需要await params
   const { pageSize: pageSizeStr, page: pageStr } = await params
   const pageSize = parseInt(pageSizeStr)
@@ -57,7 +57,7 @@ export default async function TransactionsPage({ params }: TransactionsPageProps
 
       <div className="space-y-3">
         {transactions.map((tx) => (
-          <TransactionCard tx={tx} t={t}  key={tx.txid} />
+          <TransactionCard dapStatus={tx.dapStatus} tx={tx} t={t} key={tx.txid} />
         ))}
       </div>
 

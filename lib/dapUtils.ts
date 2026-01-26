@@ -11,7 +11,7 @@ export class DapUtils {
   }
 
   // 解析内容
-  parseContent(dapStatus: DapStatus, processedTransaction: TransactionType, txData: TxDetailType) {
+  parseContent(dapStatus: DapStatus, processedTransaction: TransactionType) {
     const _processedTransaction: TransactionType = { ...processedTransaction }
     let isShowDap = false
     let dapReceivers: TransactionType['receivers'] = []
@@ -33,7 +33,7 @@ export class DapUtils {
         isShowDap = true
       }
 
-      scashDAPData = this.scashDAP.parseDapTransaction(txData.io)
+      scashDAPData = this.scashDAP.parseDapTransaction(processedTransaction.receivers)
       dapReceivers = _processedTransaction.receivers.filter((item) => {
         return this.scashDAP.isScashDAPAddress(item.address)
       })

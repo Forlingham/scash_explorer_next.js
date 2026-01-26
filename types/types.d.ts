@@ -118,6 +118,7 @@ interface TransactionType {
   fee: number
   timestamp: string
   confirmations: number
+  dapStatus: DapStatus
 }
 
 interface DapStatus {

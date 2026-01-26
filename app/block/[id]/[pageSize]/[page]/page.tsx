@@ -188,7 +188,7 @@ export default async function BlockDetailPage({ params }: { params: { id: string
           <CardContent>
             <div className="space-y-3">
               {transactions.map((tx) => (
-                <TransactionCard tx={tx} t={t} key={tx.txid} />
+                <TransactionCard  dapStatus={tx.dapStatus} tx={tx} t={t} key={tx.txid} />
               ))}
             </div>
 

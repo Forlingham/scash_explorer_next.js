@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { AlertCircle, ArrowRightLeft, CheckCircle2, Database } from 'lucide-react'
 import Link from 'next/link'
 import { DapUtils } from '@/lib/dapUtils'
+import { DapBadge } from '@/components/dap-badge'
 
 export default async function TransactionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -21,12 +22,11 @@ export default async function TransactionDetailPage({ params }: { params: Promis
     const txData = transactionDetailApiRes.tx
     const processedTransaction = transactionDetailApiRes.processedTransaction
     const confirmations = processedTransaction.confirmations
-    const dapStatus = transactionDetailApiRes.dapStatus
+    const dapStatus = processedTransaction.dapStatus
 
     const { isShowDap, dapReceivers, depFee, networkFee, scashDAPData } = await dapUtils.parseContent(
       dapStatus,
-      processedTransaction,
-      txData
+      processedTransaction
     )
 
     return (
@@ -35,12 +35,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
             <ArrowRightLeft className="h-8 w-8 text-primary" />
             {t('tx.title')}
-            {dapStatus.isDap && (
-              <Badge className="ml-2 bg-gradient-to-r from-[#8B3FBF] to-[#A855F7] text-white border-0 gap-1 px-3 py-1 text-sm font-medium shadow-md hover:from-[#9d4ed6] hover:to-[#b566ff]">
-                <Database className="h-3.5 w-3.5" />
-                DAP Data
-              </Badge>
-            )}
+            {dapStatus.isDap && <DapBadge />}
           </h1>
           <p className="text-sm text-muted-foreground font-mono break-all mt-2">{txData.txid}</p>
         </div>
@@ -105,7 +100,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
 
             {/* Transaction Card */}
             <div className="mb-8">
-              <TransactionCard dapStatus={dapStatus} txData={txData} tx={processedTransaction} t={t} isTx={true} />
+              <TransactionCard dapStatus={dapStatus} tx={processedTransaction} t={t} isTx={true} />
             </div>
           </>
         )}
