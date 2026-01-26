@@ -24,10 +24,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
     const confirmations = processedTransaction.confirmations
     const dapStatus = processedTransaction.dapStatus
 
-    const { isShowDap, dapReceivers, depFee, networkFee, scashDAPData } = await dapUtils.parseContent(
-      dapStatus,
-      processedTransaction
-    )
+    const { isShowDap, dapReceivers, depFee, networkFee, scashDAPData } = await dapUtils.parseContent(dapStatus, processedTransaction)
 
     return (
       <div className="container mx-auto px-4 py-8">
@@ -88,6 +85,11 @@ export default async function TransactionDetailPage({ params }: { params: Promis
         </Card>
         {!isShowDap && (
           <>
+            {/* Transaction Card */}
+            <div className="mb-8">
+              <TransactionCard dapStatus={dapStatus} tx={processedTransaction} t={t} isTx={true} />
+            </div>
+
             {/* Transaction Flow Visualization */}
             <TransactionFlowVisualization
               inputs={processedTransaction.senders}
@@ -97,11 +99,6 @@ export default async function TransactionDetailPage({ params }: { params: Promis
               showDiagramText={t('tx.showDiagram')}
               outputLabel={t('tx.output')}
             />
-
-            {/* Transaction Card */}
-            <div className="mb-8">
-              <TransactionCard dapStatus={dapStatus} tx={processedTransaction} t={t} isTx={true} />
-            </div>
           </>
         )}
         {isShowDap && scashDAPData && (
