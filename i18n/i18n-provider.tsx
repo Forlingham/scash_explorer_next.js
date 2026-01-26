@@ -265,6 +265,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'inactiveAddresses.address': 'Address',
 
     // Common
+    'dap.message': 'Message',
     'common.loading': 'Loading...',
     'common.error': 'Error loading data',
     'common.noData': 'No data available',
@@ -604,6 +605,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'inactiveAddresses.address': '地址',
 
     // Common
+    'dap.message': '转账备注',
     'common.loading': '加载中...',
     'common.error': '加载数据出错',
     'common.noData': '暂无数据',
@@ -946,6 +948,7 @@ const translations: Record<Locale, Record<string, string>> = {
     'inactiveAddresses.address': 'Адрес',
 
     // Common
+    'dap.message': 'Сообщение',
     'common.loading': 'Загрузка...',
     'common.error': 'Ошибка загрузки данных',
     'common.noData': 'Нет данных',

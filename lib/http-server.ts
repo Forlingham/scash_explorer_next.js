@@ -187,6 +187,56 @@ export function inactiveAddressesListApi(period: string, type: string, page: num
   })
 }
 
+interface DapListItem {
+  id: string
+  txid: string
+  blockHeight: number
+  address: string
+  magicHeader: string
+  dataContent: string
+  chunkCount: number
+  totalFee: string
+  totalOutputValue: string
+  sortOrder: number
+  isViolation: boolean
+  isMessageDap: boolean
+  timestamp: string
+}
+/**
+ * 获取 DAP 数据列表（支持多条件查询）
+ * @param filterTransfer 是否过滤掉转账留言
+ * @param address 地址筛选
+ * @param txid 交易ID筛选
+ * @param content 内容模糊搜索
+ * @param page 页码
+ * @param pageSize 每页数量
+ * @param sortBy 排序字段 (sortOrder, blockHeight, timestamp, totalFee)
+ * @param sortOrder 排序方向 (asc, desc)
+ */
+export function getDapListApi(
+  filterTransfer: boolean,
+  address?: string,
+  txid?: string,
+  content?: string,
+  page?: number,
+  pageSize?: number,
+  sortBy?: string,
+  sortOrder?: string
+) {
+  return serverHttpClient.get<PageType<DapListItem>>('/dap/list', {
+    params: {
+      filterTransfer,
+      address,
+      txid,
+      content,
+      page,
+      pageSize,
+      sortBy,
+      sortOrder
+    }
+  })
+}
+
 interface ExplorerApiInfo {
   name: string
   version: string

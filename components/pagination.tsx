@@ -20,6 +20,7 @@ interface PaginationProps {
     pageSize: string
   }
   className?: string
+  extraParams?: Record<string, string>
 }
 
 export function Pagination({
@@ -30,16 +31,30 @@ export function Pagination({
   linkStyle = 'path',
   queryParamKeys = { page: 'page', pageSize: 'pageSize' },
   translations,
-  className
+  className,
+  extraParams
 }: PaginationProps) {
   const isMobile = useIsMobile()
 
   const buildHref = (page: number, pz: number) => {
+    let url = ''
     if (linkStyle === 'query') {
       const qp = new URLSearchParams({ [queryParamKeys.page]: String(page), [queryParamKeys.pageSize]: String(pz) })
-      return `${basePath}?${qp.toString()}`
+      url = `${basePath}?${qp.toString()}`
+    } else {
+      url = `${basePath}/${pz}/${page}`
     }
-    return `${basePath}/${pz}/${page}`
+
+    if (extraParams && Object.keys(extraParams).length > 0) {
+      const qp = new URLSearchParams(extraParams)
+      // Check if url already has query params
+      if (url.includes('?')) {
+        url += '&' + qp.toString()
+      } else {
+        url += '?' + qp.toString()
+      }
+    }
+    return url
   }
 
   // 生成页码数组

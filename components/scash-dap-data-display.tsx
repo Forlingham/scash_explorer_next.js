@@ -12,7 +12,7 @@ import { DapMessageDisplay } from './dap-message-display'
 
 interface ScashDAPDataDisplayProps {
   data: string
-  title: string
+  title: string | React.ReactNode
   dapReceivers?: any[]
   depFee?: bigint
   networkFee?: number
