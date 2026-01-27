@@ -19,13 +19,16 @@ interface DatePickerProps {
   className?: string
   /** 按钮文本 */
   placeholder?: string
+  /** 查询参数名称（如果有，则使用查询参数 ?param=value，否则使用路径参数 /value） */
+  paramName?: string
 }
 
 export function DatePicker({
   selectedDate,
   basePath,
   className,
-  placeholder = "选择日期"
+  placeholder = "选择日期",
+  paramName
 }: DatePickerProps) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -36,7 +39,11 @@ export function DatePicker({
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       const dateString = format(date, 'yyyy-MM-dd')
-      router.push(`${basePath}/${dateString}`)
+      if (paramName) {
+        router.push(`${basePath}?${paramName}=${dateString}`)
+      } else {
+        router.push(`${basePath}/${dateString}`)
+      }
       setOpen(false)
     }
   }
