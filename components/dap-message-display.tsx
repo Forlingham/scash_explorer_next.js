@@ -5,6 +5,7 @@ import { Maximize2, X, Eye } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from '@/components/ui/dialog'
 import { MarkdownRenderer } from '@/components/markdown-renderer'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface DapMessageDisplayProps {
   content: string
@@ -78,7 +79,7 @@ export function DapMessageDisplay({ content, showPreview = true, buttonText, tit
 
   if (showPreview && !isInteractive) {
     return (
-      <div className={`rounded-lg border border-transparent bg-muted/50 p-3 ${className || ''}`}>
+      <div className={cn("rounded-lg border border-transparent bg-muted/50 p-3", className)}>
         <div className="text-sm text-muted-foreground break-all whitespace-pre-wrap">{content}</div>
       </div>
     )
@@ -93,7 +94,10 @@ export function DapMessageDisplay({ content, showPreview = true, buttonText, tit
       <DialogTrigger asChild>
         <button
           type="button"
-          className={`w-full text-left group relative cursor-pointer rounded-lg border border-transparent bg-muted/50 p-3 hover:bg-muted hover:border-primary/50 transition-all duration-200 ${className || ''}`}
+          className={cn(
+            "w-full text-left group relative cursor-pointer rounded-lg border border-transparent bg-muted/50 p-3 hover:bg-muted hover:border-primary/50 transition-all duration-200",
+            className
+          )}
         >
           <div className="text-sm text-muted-foreground break-all line-clamp-3">
             {displayPreview || <span className="text-muted-foreground/70 italic">{'dap.clickToView'}</span>}

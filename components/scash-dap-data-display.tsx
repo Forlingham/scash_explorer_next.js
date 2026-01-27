@@ -9,6 +9,7 @@ import { satoshisToBtc } from '@/lib/currency.utils'
 import { Badge } from '@/components/ui/badge'
 import { BASE_SYMBOL } from '@/lib/const'
 import { DapMessageDisplay } from './dap-message-display'
+import { cn } from '@/lib/utils'
 
 interface ScashDAPDataDisplayProps {
   data: string
@@ -17,6 +18,7 @@ interface ScashDAPDataDisplayProps {
   depFee?: bigint
   networkFee?: number
   isShowMessageDisplay?: boolean
+  compact?: boolean
 }
 
 export async function ScashDAPDataDisplay({
@@ -25,7 +27,8 @@ export async function ScashDAPDataDisplay({
   dapReceivers,
   depFee,
   networkFee,
-  isShowMessageDisplay = false
+  isShowMessageDisplay = false,
+  compact = false
 }: ScashDAPDataDisplayProps) {
   if (!data) return null
   const { t } = await getServerTranslations()
@@ -58,19 +61,21 @@ export async function ScashDAPDataDisplay({
 
   if (isShowMessageDisplay) {
     return (
-      <div className="mt-3 border-t pt-3">
-        <div className="flex items-center justify-between mb-2 px-1">
-          <div className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium text-muted-foreground">{title}</span>
-          </div>
-          {dapReceivers && dapReceivers.length > 0 && (
-            <div className="scale-90 origin-right">
-              <ScashDAPRawDataViewer dapReceivers={dapReceivers} />
+      <div className={cn(title ? "mt-3 border-t pt-3" : "")}>
+        {title && (
+          <div className="flex items-center justify-between mb-2 px-1">
+            <div className="flex items-center gap-2">
+              <FileText className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-medium text-muted-foreground">{title}</span>
             </div>
-          )}
-        </div>
-        {!isClean ? alertContent : <DapMessageDisplay content={data} />}
+            {dapReceivers && dapReceivers.length > 0 && (
+              <div className="scale-90 origin-right">
+                <ScashDAPRawDataViewer dapReceivers={dapReceivers} />
+              </div>
+            )}
+          </div>
+        )}
+        {!isClean ? alertContent : <DapMessageDisplay content={data} className={cn(compact && "p-2 text-xs")} />}
       </div>
     )
   }

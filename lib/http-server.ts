@@ -212,6 +212,7 @@ interface DapListItem {
  * @param pageSize 每页数量
  * @param sortBy 排序字段 (sortOrder, blockHeight, timestamp, totalFee)
  * @param sortOrder 排序方向 (asc, desc)
+ * @param isTop 是否查询置顶留言
  */
 export function getDapListApi(
   filterTransfer: boolean,
@@ -221,7 +222,8 @@ export function getDapListApi(
   page?: number,
   pageSize?: number,
   sortBy?: string,
-  sortOrder?: string
+  sortOrder?: string,
+  isTop?: boolean
 ) {
   return serverHttpClient.get<PageType<DapListItem>>('/dap/list', {
     params: {
@@ -232,9 +234,19 @@ export function getDapListApi(
       page,
       pageSize,
       sortBy,
-      sortOrder
+      sortOrder,
+      isTop
     }
   })
+}
+
+interface DapStatsType {
+  totalAmount: string
+  totalAddrs: number
+  totalTxs: number
+}
+export function getDapStatsApi() {
+  return serverHttpClient.get<DapStatsType>(`/dap/stats`, {})
 }
 
 interface ExplorerApiInfo {

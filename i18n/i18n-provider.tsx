@@ -160,6 +160,10 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.rawData': 'Raw data',
     'dap.rawDataDesc': 'Raw transaction output data associated with this DAP record.',
     'dap.transferMessage': 'Transfer Message',
+    'dap.pinned': 'Pinned',
+    'dap.totalTxs': 'Total Transactions',
+    'dap.totalAddrs': 'Total Addresses',
+    'dap.totalAmount': 'Total Amount',
 
     // Block
     'block.title': 'Block Details',
@@ -502,6 +506,10 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.rawData': '原始数据',
     'dap.rawDataDesc': '与此 DAP 记录关联的原始交易输出数据。',
     'dap.transferMessage': '转账留言',
+    'dap.pinned': '置顶',
+    'dap.totalTxs': 'DAP 总交易数',
+    'dap.totalAddrs': 'DAP 总地址数',
+    'dap.totalAmount': 'DAP 总金额',
     // Block
     'block.title': '区块详情',
     'block.height': '高度',
@@ -845,6 +853,10 @@ const translations: Record<Locale, Record<string, string>> = {
     'dap.rawData': 'Сырые данные',
     'dap.rawDataDesc': 'Сырые данные выходов транзакций, связанные с этой записью DAP.',
     'dap.transferMessage': 'Сообщение перевода',
+    'dap.pinned': 'Закреплено',
+    'dap.totalTxs': 'Всего транзакций',
+    'dap.totalAddrs': 'Всего адресов',
+    'dap.totalAmount': 'Всего сумма',
 
     // Block
     'block.title': 'Детали блока',
