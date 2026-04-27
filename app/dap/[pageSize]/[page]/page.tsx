@@ -184,6 +184,7 @@ export default async function DapListPage({
                         depFee={BigInt(item.totalFee || 0)}
                         isShowMessageDisplay={true}
                         compact={true}
+                        dapListMode={true}
                       />
                     </div>
                   </div>
@@ -225,6 +226,7 @@ export default async function DapListPage({
                     title={null}
                     depFee={BigInt(item.totalFee || 0)}
                     isShowMessageDisplay={true}
+                    dapListMode={true}
                   />
                 </div>
               </div>
