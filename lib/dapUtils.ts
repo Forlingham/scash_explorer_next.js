@@ -51,7 +51,6 @@ export class DapUtils {
         const parsedData = this.scashDAP.parseDapTransaction(processedTransaction.receivers)
         if (parsedData) {
           scashDAPData = parsedData
-          isShowDap = true
           dapReceivers = _processedTransaction.receivers.filter((item) => {
             return this.scashDAP.isScashDAPAddress(item.address)
           })
@@ -59,6 +58,10 @@ export class DapUtils {
           _processedTransaction.receivers = _processedTransaction.receivers.filter((item) => {
             return !dapReceivers.some((dapItem) => dapItem.address === item.address)
           })
+          // Only hide transaction data if there are NO remaining regular receivers (pure inscription)
+          if (_processedTransaction.receivers.length === 0) {
+            isShowDap = true
+          }
         }
       }
     }

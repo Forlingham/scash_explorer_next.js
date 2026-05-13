@@ -148,7 +148,7 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
 
       <CardContent className="pt-0 py-3">
         {/* 输入输出区域 */}
-        {(dapStatus.isDap || scashDAPData) && !dapStatus.isMessageDap ? (
+        {isShowDap ? (
           <></>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
