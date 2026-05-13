@@ -130,9 +130,9 @@ export default async function AddressDetailPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex justify-between items-center">
+      <div className="mb-8 flex flex-col md:flex-row justify-between md:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 flex items-center gap-3">
             <Wallet className="h-8 w-8 text-primary" />
             {t('address.title')}
             <AddAddressTagButton address={addressData.address} className="ml-2" locale={locale} />
@@ -143,7 +143,7 @@ export default async function AddressDetailPage({
           </div>
           <AddressTags tags={addressTags} />
         </div>
-        <div className="flex items-center gap-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-10">
           <div>
             {t('address.lastSeen')}:<div className="font-medium">{addressData.lastSeen}</div>
           </div>
@@ -154,14 +154,14 @@ export default async function AddressDetailPage({
       </div>
 
       {/* Overview Cards */}
-      <div className="grid gap-6 md:grid-cols-4 mb-8">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-8">
         <Card className="border-primary/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.balance')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">
-              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL} integerClassName="text-2xl" decimalClassName="text-lg" />
+            <div className="text-xl sm:text-2xl font-bold text-primary">
+              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL} integerClassName="text-xl sm:text-2xl" decimalClassName="text-base sm:text-lg" />
             </div>
           </CardContent>
         </Card>
@@ -171,12 +171,12 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.received')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">
+            <div className="text-xl sm:text-2xl font-bold text-success">
               <FormattedAmount
                 value={addressData.totalReceived}
                 symbol={BASE_SYMBOL}
-                integerClassName="text-2xl"
-                decimalClassName="text-lg"
+                integerClassName="text-xl sm:text-2xl"
+                decimalClassName="text-base sm:text-lg"
               />
             </div>
           </CardContent>
@@ -187,8 +187,8 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.sent')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-muted-foreground">
-              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL} integerClassName="text-2xl" decimalClassName="text-lg" />
+            <div className="text-xl sm:text-2xl font-bold text-muted-foreground">
+              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL} integerClassName="text-xl sm:text-2xl" decimalClassName="text-base sm:text-lg" />
             </div>
           </CardContent>
         </Card>
@@ -198,7 +198,7 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.txCount')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalTransactions.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold">{totalTransactions.toLocaleString()}</div>
           </CardContent>
         </Card>
       </div>

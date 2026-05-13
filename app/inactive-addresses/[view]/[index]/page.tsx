@@ -97,47 +97,78 @@ export default async function InactiveDetailPage({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('inactiveAddresses.address')}</TableHead>
-                <TableHead className="text-right">
-                  {t('inactiveAddresses.balance')}（{BASE_SYMBOL}）
-                </TableHead>
-                <TableHead className="text-right">{t('address.lastSeen')}</TableHead>
-                <TableHead className="text-right">{t('blocks.transactions')}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {apiData?.addresses?.map((row) => (
-                <TableRow key={row.address}>
-                  <TableCell className="font-mono break-all">
-                    <Link href={`/address/${row.address}`} className="hover:underline">
-                      {row.address}
-                    </Link>
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {/* { `${satoshisToBtc(row.balance)} ${BASE_SYMBOL}` } */}
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t('inactiveAddresses.address')}</TableHead>
+                  <TableHead className="text-right">
+                    {t('inactiveAddresses.balance')}（{BASE_SYMBOL}）
+                  </TableHead>
+                  <TableHead className="text-right">{t('address.lastSeen')}</TableHead>
+                  <TableHead className="text-right">{t('blocks.transactions')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {apiData?.addresses?.map((row) => (
+                  <TableRow key={row.address}>
+                    <TableCell className="font-mono break-all">
+                      <Link href={`/address/${row.address}`} className="hover:underline">
+                        {row.address}
+                      </Link>
+                    </TableCell>
+                    <TableCell className="text-right font-mono">
+                      {/* { `${satoshisToBtc(row.balance)} ${BASE_SYMBOL}` } */}
+                      <FormattedAmount
+                        value={satoshisToBtc(row.balance)}
+                        decimalClassName="text-xs"
+                        className="text-primary font-bold"
+                        symbolClassName="h-5 "
+                      />
+                    </TableCell>
+                    <TableCell className="text-right">{formatTime(row.lastActive, t)}</TableCell>
+                    <TableCell className="text-right">{row.txCount ? row.txCount.toLocaleString() : '-'}</TableCell>
+                  </TableRow>
+                ))}
+                {!errorMsg && (apiData?.addresses?.length ?? 0) === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center text-muted-foreground">
+                      {t('common.noData')}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="md:hidden space-y-3">
+            {apiData?.addresses?.map((row) => (
+              <div key={row.address} className="rounded-lg border p-4">
+                <Link href={`/address/${row.address}`} className="font-mono text-sm text-primary hover:underline break-all">
+                  {row.address}
+                </Link>
+                <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                  <div className="text-muted-foreground">{t('inactiveAddresses.balance')}</div>
+                  <div className="text-right font-mono">
                     <FormattedAmount
                       value={satoshisToBtc(row.balance)}
                       decimalClassName="text-xs"
                       className="text-primary font-bold"
-                      symbolClassName="h-5 "
+                      symbolClassName="h-5"
                     />
-                  </TableCell>
-                  <TableCell className="text-right">{formatTime(row.lastActive, t)}</TableCell>
-                  <TableCell className="text-right">{row.txCount ? row.txCount.toLocaleString() : '-'}</TableCell>
-                </TableRow>
-              ))}
-              {!errorMsg && (apiData?.addresses?.length ?? 0) === 0 && (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center text-muted-foreground">
-                    {t('common.noData')}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                  </div>
+                  <div className="text-muted-foreground">{t('address.lastSeen')}</div>
+                  <div className="text-right">{formatTime(row.lastActive, t)}</div>
+                  <div className="text-muted-foreground">{t('blocks.transactions')}</div>
+                  <div className="text-right">{row.txCount ? row.txCount.toLocaleString() : '-'}</div>
+                </div>
+              </div>
+            ))}
+            {!errorMsg && (apiData?.addresses?.length ?? 0) === 0 && (
+              <div className="text-center text-muted-foreground py-8">
+                {t('common.noData')}
+              </div>
+            )}
+          </div>
           {apiData?.pagination && (
             <Pagination
               currentPage={apiData.pagination.page}

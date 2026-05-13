@@ -217,8 +217,13 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
               )}
             </div>
 
+            {/* Mobile divider */}
+            <div className="lg:hidden flex items-center justify-center py-1">
+              <ArrowRightLeft className="h-4 w-4 text-muted-foreground" />
+            </div>
+
             {/* 箭头 */}
-            <div className="flex items-center justify-center">
+            <div className="hidden lg:flex items-center justify-center">
               <div className="flex flex-col items-center gap-1 p-2">
                 <ArrowRightLeft className="h-5 w-5 text-muted-foreground" />
                 <div className="text-xs text-muted-foreground text-center">

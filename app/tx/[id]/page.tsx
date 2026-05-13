@@ -29,7 +29,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 flex items-center gap-3">
             <ArrowRightLeft className="h-8 w-8 text-primary" />
             {t('tx.title')}
             {dapStatus.isDap && <DapBadge />}
@@ -45,7 +45,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="flex items-center gap-3">
                   {confirmations > 5 ? <CheckCircle2 className="h-8 w-8 text-success" /> : <AlertCircle className="h-8 w-8 text-warning" />}
                   <div>
