@@ -79,7 +79,7 @@ export function HeaderClient({ navItems, searchPlaceholder, currentLocale, searc
       </nav>
 
       {/* Search */}
-      <div className="flex-1 max-w-md">
+      <div className="hidden sm:flex flex-1 max-w-md">
         <form className="relative w-full flex items-center gap-2" onSubmit={onSearchSubmit}>
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
