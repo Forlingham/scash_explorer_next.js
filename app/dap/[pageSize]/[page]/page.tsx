@@ -144,7 +144,7 @@ export default async function DapListPage({
                 <Link
                   key={item.id}
                   href={`/tx/${item.txid}`}
-                  className="min-w-[280px] max-w-[320px] flex-shrink-0 snap-start group relative flex flex-col justify-between rounded-xl border border-primary/40 bg-gradient-to-br from-card to-primary/10 hover:to-primary/20 transition-all duration-300 hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.3)] hover:-translate-y-1 hover:border-primary/70 overflow-hidden"
+                  className="min-w-[260px] sm:min-w-[280px] max-w-[300px] sm:max-w-[320px] flex-shrink-0 snap-start group relative flex flex-col justify-between rounded-xl border border-primary/40 bg-gradient-to-br from-card to-primary/10 hover:to-primary/20 transition-all duration-300 hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.3)] hover:-translate-y-1 hover:border-primary/70 overflow-hidden"
                 >
                   {/* Top decoration line */}
                   <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-primary/60 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />

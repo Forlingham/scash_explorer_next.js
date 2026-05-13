@@ -48,12 +48,12 @@ export default async function BlockDetailPage({ params }: { params: { id: string
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 flex items-center gap-3">
             <Cube className="h-8 w-8 text-primary" />
             {t('block.title')}
           </h1>
-          <p className="text-lg text-muted-foreground">
-            {t('block.hash')}: <span className="font-semibold text-foreground">{blockData.hash}</span>
+          <p className="text-xs sm:text-sm md:text-lg text-muted-foreground break-all">
+            {t('block.hash')}: <span className="font-mono font-semibold text-foreground">{blockData.hash}</span>
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export default async function BlockDetailPage({ params }: { params: { id: string
             {t('block.next')}
           </Link>
 
-          <Badge variant="outline" className="text-base px-4 py-2">
+          <Badge variant="outline" className="text-xs sm:text-base px-2 sm:px-4 py-1 sm:py-2">
             {t('block.height')}: {blockData.height.toLocaleString()}
           </Badge>
           <Link

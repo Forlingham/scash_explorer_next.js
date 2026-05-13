@@ -97,21 +97,21 @@ export default async function HomePage() {
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <div className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
           {t('home.title')}
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t('home.subtitle')}</p>
+        <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl mx-auto">{t('home.subtitle')}</p>
       </div>
 
       {/* Top Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-3 grid-cols-2 lg:grid-cols-4 mb-8">
         <Card className="border-primary/20 hover:border-primary/40 transition-colors">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('home.totalBlocks')}</CardTitle>
             <Box className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{dailyStats.totalBlocks.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold text-foreground">{dailyStats.totalBlocks.toLocaleString()}</div>
             <p className="text-xs  flex items-center gap-1 mt-1">
               {/* <ArrowUpRight className="h-3 w-3" />+{dailyStats.totalBlocksChange.toLocaleString()} {t('home.last24h')} */}
 
@@ -126,7 +126,7 @@ export default async function HomePage() {
             <Activity className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{dailyStats.totalTxs.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold text-foreground">{dailyStats.totalTxs.toLocaleString()}</div>
             <p className="text-xs  flex items-center gap-1 mt-1">
               {/* <ArrowUpRight className="h-3 w-3" />+{dailyStats.totalTxsChange.toLocaleString()} {t('home.last24h')} */}
               <PriceChange value={dailyStats.totalTxsChange} textSize="text-xs" iconSize="h-3 w-3" unit=" " />
@@ -140,7 +140,7 @@ export default async function HomePage() {
             <Wallet className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{dailyStats.totalAddrCount.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold text-foreground">{dailyStats.totalAddrCount.toLocaleString()}</div>
             {/* {t('stats.activeWallets')}: */}
             <p className="text-xs text-muted-foreground mt-1">{dailyStats.totalAddrCountChange.toLocaleString()}</p>
           </CardContent>
@@ -152,7 +152,7 @@ export default async function HomePage() {
             <TrendingUp className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{formatMarketCap(dailyStats.totalMarketCap)}</div>
+            <div className="text-xl sm:text-2xl font-bold text-foreground">{formatMarketCap(dailyStats.totalMarketCap)}</div>
             <p className="text-xs  flex items-center gap-1 mt-1">
               <PriceChange value={dailyStats.totalMarketCapChange} textSize="text-xs" iconSize="h-3 w-3" />
             </p>
@@ -169,7 +169,7 @@ export default async function HomePage() {
               <div>
                 <CardTitle className="text-lg">{t('home.priceChart')}</CardTitle>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-3xl font-bold">${price.price.toLocaleString()}</span>
+                  <span className="text-2xl sm:text-3xl font-bold">${price.price.toLocaleString()}</span>
                   <PriceChange value={price.changePercent7d.toFixed(2)} />
                 </div>
               </div>
@@ -199,7 +199,7 @@ export default async function HomePage() {
                       <Clock className="h-3 w-3" />~{estimate.blocks} {t('stats.blocks')}
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-primary">{estimate.rate} sat/vB</div>
+                  <div className="text-lg sm:text-2xl font-bold text-primary">{estimate.rate} sat/vB</div>
                 </div>
               ))}
             </div>
@@ -227,7 +227,7 @@ export default async function HomePage() {
               <div className="flex gap-4 overflow-x-auto pb-4 blocks-scroll">
                 {recentBlocks.map((block) => (
                   <div
-                    className="flex-shrink-0 w-[280px] p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-all border border-border hover:border-primary/40 hover:shadow-md"
+                    className="flex-shrink-0 w-[240px] sm:w-[280px] p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-all border border-border hover:border-primary/40 hover:shadow-md"
                     key={block.height}
                   >
                     <div className="space-y-3">
@@ -265,7 +265,7 @@ export default async function HomePage() {
                             <span className="text-xs">💰</span>
                           </div>
                           <span className="text-xs font-medium text-foreground">
-                            {satoshisToBtc(block.reward)} {BASE_SYMBOL}
+                            {satoshisToBtc(block.reward)} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5" title={t('home.totalFees')}>
@@ -273,7 +273,7 @@ export default async function HomePage() {
                             <Zap className="h-3 w-3 text-primary" />
                           </div>
                           <span className="text-xs font-medium text-foreground">
-                            {block.medianFee} {BASE_SYMBOL}
+                            {block.medianFee} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5" title={t('home.blockSize')}>
@@ -312,15 +312,15 @@ export default async function HomePage() {
               {/* 总体统计 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">{inactiveAddressesApiRes.totalAddresses.toLocaleString()}</div>
+                  <div className="text-xl sm:text-2xl font-bold text-primary">{inactiveAddressesApiRes.totalAddresses.toLocaleString()}</div>
                   <div className="text-sm text-muted-foreground">{t('inactiveAddresses.totalAddresses')}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">
+                  <div className="text-xl sm:text-2xl font-bold text-primary">
                     <FormattedAmount
                       value={satoshisToBtc(inactiveAddressesApiRes.totalBalance)}
-                      integerClassName="text-2xl"
-                      decimalClassName="text-lg"
+                      integerClassName="text-xl sm:text-2xl"
+                      decimalClassName="text-base sm:text-lg"
                       className="text-primary font-bold"
                     />
                   </div>

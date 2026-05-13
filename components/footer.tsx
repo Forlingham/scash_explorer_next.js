@@ -22,14 +22,14 @@ export async function Footer() {
             </div>
             <p className="text-sm text-muted-foreground mb-3">{t('common.support')}</p>
             <div className=" text-xs">
-              <div className="mb-2">
+              <div className="mb-2 break-all">
                 <span className="font-medium">SCASH：</span> scash1qy48v7frkutlthqq7uqs8lk5fam24tghjdxqtf5
               </div>
-              <div className="mb-2">
+              <div className="mb-2 break-all">
                 <span className="font-medium">BTC：</span> bc1qnvdrxs23t6ejuxjs6mswx7cez2rn80wrwjd0u8
               </div>
 
-              <div className="">
+              <div className="break-all">
                 <span className="font-medium">BNB/USDT：</span> 0xD4dB57B007Ad386C2fC4d7DD146f5977c039Fefc
               </div>
             </div>

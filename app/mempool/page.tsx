@@ -29,7 +29,7 @@ export default function MempoolPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+        <h1 className="text-2xl sm:text-4xl font-bold mb-2 flex items-center gap-3">
           <Activity className="h-8 w-8 text-primary" />
           {t("mempool.title")}
         </h1>
@@ -54,7 +54,7 @@ export default function MempoolPage() {
           <CardDescription>Real-time pending transactions</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="rounded-md border">
+          <div className="rounded-md border hidden md:block">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -80,6 +80,23 @@ export default function MempoolPage() {
                 ))}
               </TableBody>
             </Table>
+          </div>
+          <div className="md:hidden space-y-3">
+            {mempoolTxs.map((tx) => (
+              <div key={tx.txid} className="rounded-lg border p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono text-sm truncate max-w-[200px]">{tx.txid.substring(0, 20)}...</span>
+                  <Badge variant={tx.feeRate > 30 ? "default" : "secondary"}>{tx.feeRate} sat/vB</Badge>
+                </div>
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <span>{tx.size} bytes</span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {formatTime(tx.time)}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

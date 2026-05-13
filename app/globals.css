@@ -230,3 +230,14 @@
   background: linear-gradient(to right, hsl(var(--muted)) 4%, hsl(var(--accent)) 25%, hsl(var(--muted)) 36%);
   background-size: 1000px 100%;
 }
+
+/* Hide scrollbar on mobile for horizontal scroll areas */
+@media (max-width: 640px) {
+  .blocks-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .blocks-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

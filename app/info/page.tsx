@@ -21,7 +21,7 @@ export default async function InfoPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold flex items-center gap-3">
+        <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
           <Info className="h-7 w-7 text-primary" />
           {t('info.rpcInterface')}
         </h1>
