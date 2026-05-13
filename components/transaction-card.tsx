@@ -100,7 +100,7 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
                     {tx.txid}
                   </Link>
                 </div>
-                {dapStatus.isDap && (
+                {(dapStatus.isDap || scashDAPData) && (
                   <div className="flex items-center gap-2 pl-6">
                     <DapBadge size="sm" />
                   </div>
@@ -123,7 +123,7 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
                   {satoshisToBtc(networkFee)} {BASE_SYMBOL}
                 </span>
               </div>
-              {dapStatus.isDap && (
+              {(dapStatus.isDap || scashDAPData) && (
                 <div className="flex flex-col">
                   <span className="text-muted-foreground text-xs">{t('dap.fee')}</span>
                   <span className="font-semibold text-sm">
@@ -148,7 +148,7 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
 
       <CardContent className="pt-0 py-3">
         {/* 输入输出区域 */}
-        {dapStatus.isDap && !dapStatus.isMessageDap ? (
+        {(dapStatus.isDap || scashDAPData) && !dapStatus.isMessageDap ? (
           <></>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -338,7 +338,7 @@ export default function TransactionCard({ dapStatus, tx, t, highlightAddress, is
           </div>
         )}
 
-        {dapStatus.isDap && scashDAPData && (
+        {scashDAPData && (
           <ScashDAPDataDisplay
             data={scashDAPData}
             dapReceivers={dapReceivers}

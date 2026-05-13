@@ -32,7 +32,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
             <ArrowRightLeft className="h-8 w-8 text-primary" />
             {t('tx.title')}
-            {dapStatus.isDap && <DapBadge />}
+            {(dapStatus.isDap || scashDAPData) && <DapBadge />}
           </h1>
           <p className="text-sm text-muted-foreground font-mono break-all mt-2">{txData.txid}</p>
         </div>

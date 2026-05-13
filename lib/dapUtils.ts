@@ -44,6 +44,23 @@ export class DapUtils {
           return !dapReceivers.some((dapItem) => dapItem.address === item.address)
         })
       }
+    } else {
+      // Mempool transactions: backend does not set dapStatus.isDap, detect DAP addresses locally
+      const hasDapAddress = _processedTransaction.receivers.some((item) => this.scashDAP.isScashDAPAddress(item.address))
+      if (hasDapAddress) {
+        const parsedData = this.scashDAP.parseDapTransaction(processedTransaction.receivers)
+        if (parsedData) {
+          scashDAPData = parsedData
+          isShowDap = true
+          dapReceivers = _processedTransaction.receivers.filter((item) => {
+            return this.scashDAP.isScashDAPAddress(item.address)
+          })
+          depFee = dapReceivers.reduce((acc, cur) => acc + BigInt(cur.amount), BigInt(0))
+          _processedTransaction.receivers = _processedTransaction.receivers.filter((item) => {
+            return !dapReceivers.some((dapItem) => dapItem.address === item.address)
+          })
+        }
+      }
     }
 
     _processedTransaction.receivers.forEach((item) => {
