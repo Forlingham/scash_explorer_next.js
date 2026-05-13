@@ -101,7 +101,7 @@ export default async function TransactionDetailPage({ params }: { params: Promis
             />
           </>
         )}
-        {scashDAPData && (
+        {isShowDap && scashDAPData && (
           <ScashDAPDataDisplay
             data={scashDAPData}
             dapReceivers={dapReceivers}
