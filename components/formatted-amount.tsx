@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { formatMarketCap } from '@/lib/serverUtils'
 
 interface FormattedAmountProps {
   value: number | string
@@ -11,6 +12,7 @@ interface FormattedAmountProps {
   symbolClassName?: string
   showPositiveSign?: boolean
   decimals?: number
+  compact?: boolean
 }
 
 export function FormattedAmount({
@@ -22,11 +24,41 @@ export function FormattedAmount({
   decimalClassName = 'text-sm',
   symbolClassName,
   showPositiveSign = false,
-  decimals = 8
+  decimals = 8,
+  compact = false
 }: FormattedAmountProps) {
   // 转换为数字并格式化
   const numValue = typeof value === 'string' ? parseFloat(value) : value
   const absValue = Math.abs(numValue)
+
+  // 确定符号
+  const sign = numValue >= 0 ? (showPositiveSign ? '+' : '') : '-'
+
+  // compact 模式：整数部分 >= 1000 时使用缩写格式
+  if (compact && absValue >= 1000) {
+    const compactValue = formatMarketCap(absValue, 2)
+    return (
+      <span className={cn(className)}>
+        {sign}
+        <span className={integerClassName}>
+          {compactValue}
+        </span>
+        {symbol && (
+          symbol.startsWith('/') ? (
+            <img
+              src={symbol}
+              alt={symbolAlt ?? 'symbol'}
+              className={cn('ml-1 inline-block h-8 align-text-bottom', symbolClassName)}
+            />
+          ) : (
+            <span className={cn('ml-1', symbolClassName)}>
+              {symbol}
+            </span>
+          )
+        )}
+      </span>
+    )
+  }
   
   // 格式化为指定位数的小数，然后移除末尾的0
   const formattedValue = absValue.toFixed(decimals).replace(/\.?0+$/, '')
@@ -36,9 +68,6 @@ export function FormattedAmount({
   
   // 为整数部分添加千位分隔符
   const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  
-  // 确定符号
-  const sign = numValue >= 0 ? (showPositiveSign ? '+' : '') : '-'
   
   return (
     <span className={cn(className)}>

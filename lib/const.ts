@@ -1,5 +1,6 @@
 export const BASE_NAME = 'SCASH'
 export const BASE_SYMBOL = 'SCASH'
+export const BASE_SYMBOL_LOGO = '/logo.png'
 
 const SCASH_NETWORK_MAINNET = {
   messagePrefix: '\x18Scash Signed Message:\n',

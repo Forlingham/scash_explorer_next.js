@@ -265,7 +265,7 @@ export default async function HomePage() {
                             <span className="text-xs">💰</span>
                           </div>
                           <span className="text-xs font-medium text-foreground">
-                            {satoshisToBtc(block.reward)} {BASE_SYMBOL}
+                            {satoshisToBtc(block.reward)} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5" title={t('home.totalFees')}>
@@ -273,7 +273,7 @@ export default async function HomePage() {
                             <Zap className="h-3 w-3 text-primary" />
                           </div>
                           <span className="text-xs font-medium text-foreground">
-                            {block.medianFee} {BASE_SYMBOL}
+                            {block.medianFee} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5" title={t('home.blockSize')}>

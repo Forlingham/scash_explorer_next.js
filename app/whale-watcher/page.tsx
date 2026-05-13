@@ -190,7 +190,7 @@ export default async function WhaleWatcherPage({ searchParams }: WhaleWatcherPag
                       )}
                     </TableCell>
                     <TableCell className="text-right font-semibold">
-                      {whale.balance.toLocaleString()} {BASE_SYMBOL}
+                      {whale.balance.toLocaleString()} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                     </TableCell>
                     <TableCell className="text-right">
                       <span
@@ -203,7 +203,7 @@ export default async function WhaleWatcherPage({ searchParams }: WhaleWatcherPag
                         }
                       >
                         {whale.balanceChange > 0 ? '+' : ''}
-                        {whale.balanceChange.toLocaleString()} {BASE_SYMBOL}
+                        {whale.balanceChange.toLocaleString()} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                       </span>
                     </TableCell>
                   </TableRow>
@@ -243,7 +243,7 @@ export default async function WhaleWatcherPage({ searchParams }: WhaleWatcherPag
                 <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
                   <div className="text-muted-foreground">{t('whale.balance')}</div>
                   <div className="text-right font-semibold">
-                    {whale.balance.toLocaleString()} {BASE_SYMBOL}
+                    {whale.balance.toLocaleString()} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                   </div>
                   <div className="text-muted-foreground">{t('whale.balanceChange')}</div>
                   <div className="text-right">
@@ -257,7 +257,7 @@ export default async function WhaleWatcherPage({ searchParams }: WhaleWatcherPag
                       }
                     >
                       {whale.balanceChange > 0 ? '+' : ''}
-                      {whale.balanceChange.toLocaleString()} {BASE_SYMBOL}
+                      {whale.balanceChange.toLocaleString()} <img src="/logo.png" alt="SCASH" className="inline-block h-4 align-text-bottom ml-0.5" />
                     </span>
                   </div>
                   <div className="text-muted-foreground">{t('whale.rankChange')}</div>

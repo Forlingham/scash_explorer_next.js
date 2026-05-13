@@ -11,7 +11,7 @@ import AddressTransactionGraphG6 from '@/components/address-transaction-graph-g6
 import CopyButton from '@/components/copy-button'
 import { Pagination } from '@/components/pagination'
 import { getServerTranslations } from '@/i18n/server-i18n'
-import { BASE_SYMBOL } from '@/lib/const'
+import { BASE_SYMBOL_LOGO } from '@/lib/const'
 import { satoshisToBtc } from '@/lib/currency.utils'
 import { addressDetailApi, addressTransactionsApi } from '@/lib/http-server'
 import { formatTime } from '@/lib/serverUtils'
@@ -160,8 +160,8 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.balance')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-primary">
-              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL} integerClassName="text-xl sm:text-2xl" decimalClassName="text-base sm:text-lg" />
+            <div className="text-xl sm:text-2xl font-bold text-primary overflow-hidden">
+              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL_LOGO} compact integerClassName="text-base sm:text-2xl" decimalClassName="text-sm sm:text-lg" symbolClassName="h-5" />
             </div>
           </CardContent>
         </Card>
@@ -171,12 +171,14 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.received')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-success">
+            <div className="text-xl sm:text-2xl font-bold text-success overflow-hidden">
               <FormattedAmount
                 value={addressData.totalReceived}
-                symbol={BASE_SYMBOL}
-                integerClassName="text-xl sm:text-2xl"
-                decimalClassName="text-base sm:text-lg"
+                symbol={BASE_SYMBOL_LOGO}
+                compact
+                integerClassName="text-base sm:text-2xl"
+                decimalClassName="text-sm sm:text-lg"
+                symbolClassName="h-5"
               />
             </div>
           </CardContent>
@@ -187,8 +189,8 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.sent')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-muted-foreground">
-              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL} integerClassName="text-xl sm:text-2xl" decimalClassName="text-base sm:text-lg" />
+            <div className="text-xl sm:text-2xl font-bold text-muted-foreground overflow-hidden">
+              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL_LOGO} compact integerClassName="text-base sm:text-2xl" decimalClassName="text-sm sm:text-lg" symbolClassName="h-5" />
             </div>
           </CardContent>
         </Card>
@@ -288,10 +290,11 @@ export default async function AddressDetailPage({
                       <div className={`text-lg font-semibold ${tx.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                         <FormattedAmount
                           value={tx.isPositive ? tx.netAmount : tx.netAmount * -1}
-                          symbol={BASE_SYMBOL}
+                          symbol={BASE_SYMBOL_LOGO}
                           showPositiveSign={true}
                           integerClassName="text-lg"
                           decimalClassName="text-sm"
+                          symbolClassName="h-5"
                         />
                       </div>
                     </div>
