@@ -13,6 +13,8 @@ interface FormattedAmountProps {
   showPositiveSign?: boolean
   decimals?: number
   compact?: boolean
+  // 可选：手机端显示的小数位数，通过 CSS 响应式切换
+  mobileDecimals?: number
 }
 
 export function FormattedAmount({
@@ -25,7 +27,8 @@ export function FormattedAmount({
   symbolClassName,
   showPositiveSign = false,
   decimals = 8,
-  compact = false
+  compact = false,
+  mobileDecimals
 }: FormattedAmountProps) {
   // 转换为数字并格式化
   const numValue = typeof value === 'string' ? parseFloat(value) : value
@@ -68,6 +71,47 @@ export function FormattedAmount({
   
   // 为整数部分添加千位分隔符
   const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+  // 如果设置了 mobileDecimals，生成手机端显示的短小数部分
+  const mobileDecimalPart = mobileDecimals !== undefined && decimalPart
+    ? decimalPart.slice(0, mobileDecimals)
+    : null
+
+  // 渲染符号部分
+  const symbolElement = symbol && (
+    symbol.startsWith('/') ? (
+      <img
+        src={symbol}
+        alt={symbolAlt ?? 'symbol'}
+        className={cn('ml-1 inline-block h-8 align-text-bottom', symbolClassName)}
+      />
+    ) : (
+      <span className={cn('ml-1', symbolClassName)}>
+        {symbol}
+      </span>
+    )
+  )
+
+  // 如果有 mobileDecimals，使用响应式双渲染模式
+  if (mobileDecimals !== undefined && decimalPart) {
+    return (
+      <span className={cn(className)}>
+        {sign}
+        <span className={integerClassName}>
+          {formattedInteger}
+        </span>
+        {/* 手机端：显示较少小数位 */}
+        <span className={cn('inline sm:hidden', decimalClassName)}>
+          {mobileDecimalPart ? `.${mobileDecimalPart}` : ''}
+        </span>
+        {/* 桌面端：显示完整小数位 */}
+        <span className={cn('hidden sm:inline', decimalClassName)}>
+          .{decimalPart}
+        </span>
+        {symbolElement}
+      </span>
+    )
+  }
   
   return (
     <span className={cn(className)}>
@@ -80,19 +124,7 @@ export function FormattedAmount({
           .{decimalPart}
         </span>
       )}
-      {symbol && (
-        symbol.startsWith('/') ? (
-          <img
-            src={symbol}
-            alt={symbolAlt ?? 'symbol'}
-            className={cn('ml-1 inline-block h-8 align-text-bottom', symbolClassName)}
-          />
-        ) : (
-          <span className={cn('ml-1', symbolClassName)}>
-            {symbol}
-          </span>
-        )
-      )}
+      {symbolElement}
     </span>
   )
 }

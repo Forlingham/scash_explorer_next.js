@@ -160,8 +160,8 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.balance')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-primary overflow-hidden">
-              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL_LOGO} compact integerClassName="text-base sm:text-2xl" decimalClassName="text-sm sm:text-lg" symbolClassName="h-5" />
+            <div className="text-xl sm:text-2xl font-bold text-primary overflow-hidden break-all">
+              <FormattedAmount value={addressData.balance} symbol={BASE_SYMBOL_LOGO} mobileDecimals={2} integerClassName="text-base sm:text-2xl" decimalClassName="text-xs sm:text-lg" symbolClassName="h-5" />
             </div>
           </CardContent>
         </Card>
@@ -171,13 +171,13 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.received')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-success overflow-hidden">
+            <div className="text-xl sm:text-2xl font-bold text-success overflow-hidden break-all">
               <FormattedAmount
                 value={addressData.totalReceived}
                 symbol={BASE_SYMBOL_LOGO}
-                compact
+                mobileDecimals={2}
                 integerClassName="text-base sm:text-2xl"
-                decimalClassName="text-sm sm:text-lg"
+                decimalClassName="text-xs sm:text-lg"
                 symbolClassName="h-5"
               />
             </div>
@@ -189,8 +189,8 @@ export default async function AddressDetailPage({
             <CardTitle className="text-sm font-medium text-muted-foreground">{t('address.sent')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold text-muted-foreground overflow-hidden">
-              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL_LOGO} compact integerClassName="text-base sm:text-2xl" decimalClassName="text-sm sm:text-lg" symbolClassName="h-5" />
+            <div className="text-xl sm:text-2xl font-bold text-muted-foreground overflow-hidden break-all">
+              <FormattedAmount value={addressData.totalSent} symbol={BASE_SYMBOL_LOGO} mobileDecimals={2} integerClassName="text-base sm:text-2xl" decimalClassName="text-xs sm:text-lg" symbolClassName="h-5" />
             </div>
           </CardContent>
         </Card>
